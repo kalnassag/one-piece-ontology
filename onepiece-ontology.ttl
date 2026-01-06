@@ -1,4 +1,5 @@
 @prefix : <http://kalnassag.com/onepiece#> .
+@prefix a: <> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -18,7 +19,6 @@
 ###############################################
 
 :Character a owl:Class ;
-    rdfs:subClassOf schema:Person ;
     rdfs:subClassOf dbo:FictionalCharacter ;
     rdfs:label "One Piece Character"@en ;
     rdfs:label "ワンピースのキャラクター"@ja ;
@@ -75,6 +75,11 @@
     rdfs:label "Kingdom" ;
     rdfs:comment "A kingdom in the world of One Piece, not the same as the island on which the kingdom exists".
 
+:citizenOf a owl:ObjectProperty ;
+    rdfs:label "Citizen Of" ;
+    rdfs:comment "The kingdom of which the character is a citizen" ;
+    rdfs:domain :Character ;
+    rdfs:range :Kingdom .
 :Island a owl:Class ;
     rdfs:label "Island" ;
     rdfs:comment "An island in the world of One Piece" ;
@@ -251,6 +256,11 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The arc after which the bounty was given" ;
     rdfs:domain :Bounty ;
     rdfs:range :Arc .
+:givenTo a owl:ObjectProperty ;
+    rdfs:label "Given To"@en ; 
+    rdfs:comment "The character to whom the bounty was given" ;
+    rdfs:domain :Bounty ;
+    rdfs:range :Character .
 
 ###############################################
 ##### Datatype Properties                             
@@ -280,11 +290,17 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:domain :Character ;
     rdfs:range xsd:string .
 
-:DevilFruitDebut a owl:DatatypeProperty ;
+:DevilFruitDebutManga a owl:DatatypeProperty ;
     rdfs:label "Devil Fruit Debut"@en ;
     rdfs:comment "The chapter or episode in which the devil fruit first appeared" ;
     rdfs:domain :DevilFruit ;
-    rdfs:range xsd:string .
+    rdfs:range :MangaIssue .
+
+:DevilFruitDebutAnime a owl:DatatypeProperty ;
+    rdfs:label "Devil Fruit Debut Anime"@en ;
+    rdfs:comment "The anime episode in which the devil fruit first appeared" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :AnimeEpisode .
 
 
 ###############################################
@@ -299,109 +315,3 @@ rdfs:comment "The bounty on a pirate's head in berries".
 ##############################################
 ##### Example Individuals ####################
 #############################################
-:Monkey_D_Luffy a :Character ;
-    rdfs:label "Monkey D. Luffy"@en ;
-    rdfs:label "モンキー・D・ルフィ"@ja ;
-    skos:altLabel "Luffy"@en ;
-    skos:altLabel "ルフィ"@ja ;
-    skos:altLabel "Straw Hat Luffy"@en ;
-    skos:altLabel "Captain Crackhead"@en ;
-    skos:altLabel "麦わらのルフィ"@ja ;
-    skos:altLabel "Monkī Dī Rufi"@en ;
-    rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece." ;
-    :height 172 ;
-    foaf:dateOfBirth "05-05"^^xsd:gMonthDay ;
-    :placeOfOrigin :Foosha_Village ;
-    :statusOfCharacter :Alive ;
-    :affilatesWith :Straw_Hat_Pirates ;
-    :hasdevilFruit :Gomu_Gomu_no_Mi ;
-    :epithet "Straw Hat"@en ;
-    :hasBounty :Luffy_Bounty_Whole_Cake ;
-    :hasBounty :Luffy_Bounty_East_Blue;.
-
-:Foosha_Village a :Location ;
-    rdfs:label "Foosha Village"@en ;
-    rdfs:label "フーシャ村"@ja ;
-    rdfs:comment "A small village in the East Blue where Monkey D. Luffy grew up." .
-
-:Whole_Cake_Island_Arc a :Arc;
-    rdfs:label "Whole Cake Island Arc"@en ;
-    skos:altLabel "Totto Land Arc"@en ;
-    rdfs:label "ホールケーキアイランド編"@ja ;
-    rdfs:comment "The Whole Cake Island Arc is a major story arc in the One Piece series that focuses on the Straw Hat Pirates' journey to rescue Sanji from an arranged marriage orchestrated by Big Mom.";
-    :arcStartManga "825" ;
-    :arcEndManga "902" ;
-    :arcStartAnime "783" ;
-    :arcEndAnime "877".
-
-:Luffy_Bounty_Whole_Cake a :Bounty;
-    rdfs:label "Luffy's Bounty after Whole Cake Island Arc"@en ;
-    :bountyAmount "1500000000"^^xsd:integer ;
-    :givenAfter :Whole_Cake_Island_Arc .
-
-:Luffy_Bounty_East_Blue a :Bounty;
-    rdfs:label "Luffy's Bounty after East Blue Saga"@en ;
-    :bountyAmount "30000000"^^xsd:integer ;
-    :givenAfter :East_Blue_Saga .
-
-:East_Blue_Saga a :Arc;
-    rdfs:label "East Blue Saga"@en ;
-    rdfs:label "イーストブルー編"@ja ;
-    rdfs:comment "The East Blue Saga is the first saga in the One Piece series, covering the adventures of the Straw Hat Pirates in the East Blue region." ;
-    :arcStartManga "1" ;
-    :arcEndManga "100" ;
-    :arcStartAnime "1" ;
-    :arcEndAnime "61" .
-
-:Arlong_Park_Arc a :Arc;
-    rdfs:label "Arlong Park Arc"@en ;
-    rdfs:label "アーロンパーク編"@ja ;
-    rdfs:comment "The Arlong Park Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arlong Pirates." ;
-    :arcStartManga "69" ;
-    :arcEndManga "95" ;
-    :arcStartAnime "31" ;
-    :arcEndAnime "44" .
-
-:Roronoa_Zoro a :Character ;
-    rdfs:label "Roronoa Zoro"@en ;
-    rdfs:label "ロロノア・ゾロ"@ja ;
-    skos:altLabel "Zoro"@en ;
-    skos:altLabel "ゾロ"@ja ;
-    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
-    :height 175 ;
-    :placeOfOrigin :Foosha_Village ;
-    :statusOfCharacter :Alive ;
-    :affilatesWith :Straw_Hat_Pirates ;
-    :hasdevilFruit :Gomu_Gomu_no_Mi ;
-    :epithet "Straw Hat"@en ;
-    :hasBounty :Zoro_Bounty_Whole_Cake;
-    :hasBounty :Zoro_Bounty_East_Blue;.
-
-:Zoro_Bounty_Whole_Cake a :Bounty;
-    rdfs:label "Zoro's Bounty after Whole Cake Island Arc"@en ;
-    :bountyAmount "1500000000"^^xsd:integer ;
-    :givenAfter :Whole_Cake_Island_Arc .
-
-:Zoro_Bounty_Arabasta a :Bounty;
-    rdfs:label "Zoro's Bounty after Arabasta Arc"@en ;
-    :bountyAmount "60000000"^^xsd:integer ;
-    :givenAfter :Arabasta_Arc .
-
-:Arabasta_Arc a :Arc;
-    rdfs:label "Arabasta Arc"@en ;
-    rdfs:label "アラバスタ編"@ja ;
-    rdfs:comment "The Arabasta Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arabasta Pirates." ;
-    :arcStartManga "155" ;
-    :arcEndManga "175" ;
-    :arcStartAnime "92" ;
-    :arcEndAnime "130" .
-
-:Koby a :Character ;
-    rdfs:label "Koby"@en ;
-    rdfs:label "コビー"@ja ;
-    rdfs:comment "Koby is a character from the One Piece series. He is a Marine officer who aspires to become an admiral." ;
-    :height 180 ;
-    :placeOfOrigin :Syrup_Village ;
-    :statusOfCharacter :Alive ;
-    :affilatesWith :Marines .
-
