@@ -1,0 +1,397 @@
+@prefix : <http://kalnassag.com/onepiece#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+: a owl:Ontology ;
+    rdfs:comment "One Piece World Ontology. This is a ontology representing the world of One Piece, including characters, locations, devil fruits, and other relevant entities. this is project is not affiliated with any official One Piece media owners or organizations and all original copyrights belong to the respective owners";
+     .
+
+
+###############################################
+##### Classes                             
+###############################################
+
+:Character a owl:Class ;
+    rdfs:subClassOf schema:Person ;
+    rdfs:subClassOf dbo:FictionalCharacter ;
+    rdfs:label "One Piece Character"@en ;
+    rdfs:label "ワンピースのキャラクター"@ja ;
+    rdfs:comment "A character in the One Piece universe."@en ;
+    rdfs:comment "ワンピースの世界に登場するキャラクター。"@ja ;
+    .
+
+:Affiliation a owl:Class ;
+    rdfs:label "Affiliation" ;
+    rdfs:comment "An entity with which a character or a group of characters affiliates" .
+
+:Occupation a owl:Class ;
+    rdfs:label "Occupation" ;
+    rdfs:comment "The occupation of a character in the One Piece universe. e.g. Pirate Captain, Cook, Pirate Officer, Marine Admiral" .
+
+:Pirate a owl:Class ;
+    rdfs:label "Pirate" ;
+    rdfs:comment "A pirate character in the One Piece universe." ;
+    rdfs:subClassOf :Affiliation .
+
+:Marine a owl:Class ;
+    rdfs:label "Marine" ;
+    rdfs:comment "A Marine/Navy character in the One Piece universe." ;
+    rdfs:subClassOf :Affiliation .
+
+:DevilFruit a owl:Class ;
+    rdfs:label "Devil Fruit" ;
+    rdfs:comment "A devil fruit found in the One Piece universe".
+
+:Status a owl:Class ;
+    rdfs:label "Status" ;
+    rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" .
+
+:PirateCrew a owl:Class ;
+    rdfs:label "Pirate Crew" ;
+    rdfs:comment "A group of pirates flying under the same jolly roger led by the same captain".
+
+:Alliance a owl:Class ;
+    rdfs:label "Alliance" ;
+    rdfs:comment "An alliance formed by different groups/factions";
+    rdfs:example "The alliance between the Starw Hats and the Hearts Pirates".
+
+:Region a owl:Class ;
+    rdfs:label "Region" ;
+    rdfs:comment "A region in the world of One Piece, consisting of multiple kingdoms and islands" ;
+    rdfs:subClassOf :Location .
+
+:Sea a owl:Class ;
+    rdfs:label "Sea" ;
+    rdfs:comment "A sea in the world of One Piece" ;
+    rdfs:subClassOf :Location .
+
+:Kingdom a owl:Class ;
+    rdfs:label "Kingdom" ;
+    rdfs:comment "A kingdom in the world of One Piece, not the same as the island on which the kingdom exists".
+
+:Island a owl:Class ;
+    rdfs:label "Island" ;
+    rdfs:comment "An island in the world of One Piece" ;
+    rdfs:subClassOf :Location .
+
+:City a owl:Class ;
+    rdfs:label "City" ;
+    rdfs:comment "A city in the One Piece universe" ;
+    rdfs:subClassOf :Location .
+
+:Location a owl:Class ;
+    rdfs:label "Location" ;
+    rdfs:comment "A location in the One Piece universe, such as a building or landmark" .
+
+:Creature a owl:Class ;
+    rdfs:label "Creature" ;
+    rdfs:comment "A non-speaking creature in the One Piece universe" .
+
+:Race a owl:Class ;
+    rdfs:label "Race" ;
+    rdfs:comment "Races, sometimes referred to as Tribes, are groups of sentient beings that share distinctive physical traits. Many races coexist in the world, with some originating from the moon and beyond." .
+
+:DevilFruitType a owl:Class ;
+    rdfs:label "Devil Fruit Type" ;
+    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" .
+
+:Arc a owl:Class ;
+    rdfs:label "Story Arc" ;
+    rdfs:comment "A story arc in the One Piece series" ;.
+
+:MangaIssue a owl:Class ;
+    rdfs:label "Manga Issue" ;
+    rdfs:comment "A manga issue of the One Piece series" ;.
+
+:AnimeEpisode a owl:Class ;
+    rdfs:label "Anime Episode" ;
+    rdfs:comment "An anime episode of the One Piece series" ;.
+
+:Bounty a owl:Class;
+rdfs:label "Bounty" ;
+rdfs:comment "The bounty on a pirate's head in berries".
+
+###############################################
+##### Properties                             
+###############################################
+
+###############################################
+##### Object Properties                             
+###############################################
+:residence a owl:ObjectProperty ;
+    rdfs:label "Residence" ;
+    rdfs:comment "The place where a character currently resides" ;
+    rdfs:domain :Character ;
+    rdfs:range :Location .
+
+:arcStartManga a owl:ObjectProperty ;
+    rdfs:label "Arc Start Manga" ;
+    rdfs:comment "The manga chapter in which the story arc starts" ;
+    rdfs:domain :Arc ;
+    rdfs:range :MangaIssue .
+
+:arcEndManga a owl:ObjectProperty ;
+    rdfs:label "Arc End Manga" ;
+    rdfs:comment "The manga chapter in which the story arc ends" ;
+    rdfs:domain :Arc ;
+    rdfs:range :MangaIssue .
+
+:arcStartAnime a owl:ObjectProperty ;
+    rdfs:label "Arc Start Anime" ;
+    rdfs:comment "The anime episode in which the story arc starts" ;
+    rdfs:domain :Arc ;
+    rdfs:range :AnimeEpisode .
+
+:arcEndAnime a owl:ObjectProperty ;
+    rdfs:label "Arc End Anime" ;
+    rdfs:comment "The anime episode in which the story arc ends" ;
+    rdfs:domain :Arc ;
+    rdfs:range :AnimeEpisode .
+
+:animeDebut a owl:ObjectProperty ;
+    rdfs:label "Anime Debut" ;
+    rdfs:comment "The anime episode in which the character first appeared" ;
+    rdfs:domain :Character ;
+    rdfs:range :AnimeEpisode .
+
+:mangaDebut a owl:ObjectProperty ;
+    rdfs:label "Manga Debut" ;
+    rdfs:comment "The manga issue in which the character first appeared" ;
+    rdfs:domain :Character ;
+    rdfs:range :MangaIssue .
+
+:occupation a owl:ObjectProperty ;
+    rdfs:label "Occupation" ;
+    rdfs:comment "The occupation of a character in the One Piece universe" ;
+    rdfs:domain :Character ;
+    rdfs:range :Occupation .
+
+:statusOfCharacter a owl:ObjectProperty ;
+    rdfs:label "Status of Character" ;
+    rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" ;
+    rdfs:domain :Character ;
+    rdfs:range :Status .
+
+:affiliatesWith a owl:ObjectProperty ;
+    rdfs:label "Affiliates With" ;
+    rdfs:comment "The affiliation of a character or group of characters" ;
+    rdfs:domain :Character ;
+    rdfs:range :Affiliation .
+
+:hasDevilFruit a owl:ObjectProperty ;
+    rdfs:label "Has Devil Fruit" ;
+    rdfs:comment "The devil fruit that a character has eaten" ;
+    rdfs:domain :Character ;
+    rdfs:range :DevilFruit .
+
+:race a owl:ObjectProperty ;
+    rdfs:label "Race" ;
+    rdfs:comment "The race of the character. e.g. Human, Fishman, Merfolk, Mink, Giant" ;
+    rdfs:domain :Character ;
+    rdfs:range :Race .
+
+:inCrew a owl:ObjectProperty ;  
+    rdfs:label "Crew" ;
+    rdfs:comment "The crew to which this pirate belongs" ;
+    owl:inverseOf :hasCrewMember ;
+    rdfs:domain :Pirate ;
+    rdfs:range :PirateCrew.
+
+:hasCrewMember a owl:ObjectProperty ;
+    rdfs:label "Has Crew Member" ;
+    rdfs:comment "A pirate belonging to this crew" ;
+    owl:inverseOf :inCrew ;
+    rdfs:domain :PirateCrew ;
+    rdfs:range :Pirate .
+
+:hasFruitType a owl:ObjectProperty ;
+    rdfs:label "Devil Fruit Type"@en ;
+    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :DevilFruitType .
+
+:DevilFruitCurrentUser a owl:ObjectProperty ;
+    rdfs:label "Current User" ;
+    rdfs:comment "The current user of the devil fruit" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :Character .
+
+:DevilFruitPreviousUser a owl:ObjectProperty ;
+    rdfs:label "Previous User" ;
+    rdfs:comment "A previous user of the devil fruit" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :Character .
+
+:locatedIn a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:label "Located In" ;
+    rdfs:comment "The larger location in which this location is found" ;
+    rdfs:domain :Location ;
+    rdfs:range :Location .
+
+:placeOfOrigin a owl:ObjectProperty ;
+    rdfs:label "Place of Origin"@en ;
+    rdfs:comment "The place where a character is originally from" ;
+    rdfs:domain :Character ;
+    rdfs:range :Location .
+
+:hasBounty a owl:ObjectProperty ;
+    rdfs:label "Has Bounty"@en ;
+    rdfs:comment "The bounty on a pirate's head in berries" ;
+    rdfs:domain :Character ;
+    rdfs:range :Bounty .
+
+:givenAfter a owl:ObjectProperty ;
+    rdfs:label "Given After"@en ;
+    rdfs:comment "The arc after which the bounty was given" ;
+    rdfs:domain :Bounty ;
+    rdfs:range :Arc .
+
+###############################################
+##### Datatype Properties                             
+###############################################
+
+:ageAtDeath a owl:DatatypeProperty ;
+    rdfs:label "Age at Death"@en ;
+    rdfs:comment "The age of a character at the time of their death" ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:integer .
+
+:bountyAmount a owl:DatatypeProperty ;
+    rdfs:label "Bounty Amount"@en ;
+    rdfs:comment "The amount of the bounty in berries" ;
+    rdfs:domain :Bounty ;
+    rdfs:range xsd:integer .
+
+:height a owl:DatatypeProperty ;
+    rdfs:label "Height"@en;
+    rdfs:comment "The height of a character in centimeters" ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:integer .
+
+:epithet a owl:DatatypeProperty ;
+    rdfs:label "Epithet"@en;
+    rdfs:comment "An epithet (通り名, Tōrina?) is a reputational title attached to a person, usually based on some well-known attribute—such as physical traits, personalities, or deeds." ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:string .
+
+:DevilFruitDebut a owl:DatatypeProperty ;
+    rdfs:label "Devil Fruit Debut"@en ;
+    rdfs:comment "The chapter or episode in which the devil fruit first appeared" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range xsd:string .
+
+
+###############################################
+##### Annotation Properties                             
+###############################################
+
+###############################################
+##### Individuals                             
+###############################################
+
+
+##############################################
+##### Example Individuals ####################
+#############################################
+:Monkey_D_Luffy a :Character ;
+    rdfs:label "Monkey D. Luffy"@en ;
+    rdfs:label "モンキー・D・ルフィ"@ja ;
+    skos:altLabel "Luffy"@en ;
+    skos:altLabel "ルフィ"@ja ;
+    skos:altLabel "Straw Hat Luffy"@en ;
+    skos:altLabel "Captain Crackhead"@en ;
+    skos:altLabel "麦わらのルフィ"@ja ;
+    skos:altLabel "Monkī Dī Rufi"@en ;
+    rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece." ;
+    :height 172 ;
+    foaf:dateOfBirth "05-05"^^xsd:gMonthDay ;
+    :placeOfOrigin :Foosha_Village ;
+    :statusOfCharacter :Alive ;
+    :affilatesWith :Straw_Hat_Pirates ;
+    :hasdevilFruit :Gomu_Gomu_no_Mi ;
+    :epithet "Straw Hat"@en ;
+    :hasBounty :Luffy_Bounty_Whole_Cake ;
+    :hasBounty :Luffy_Bounty_East_Blue;.
+
+:Foosha_Village a :Location ;
+    rdfs:label "Foosha Village"@en ;
+    rdfs:label "フーシャ村"@ja ;
+    rdfs:comment "A small village in the East Blue where Monkey D. Luffy grew up." .
+
+:Whole_Cake_Island_Arc a :Arc;
+    rdfs:label "Whole Cake Island Arc"@en ;
+    skos:altLabel "Totto Land Arc"@en ;
+    rdfs:label "ホールケーキアイランド編"@ja ;
+    rdfs:comment "The Whole Cake Island Arc is a major story arc in the One Piece series that focuses on the Straw Hat Pirates' journey to rescue Sanji from an arranged marriage orchestrated by Big Mom.";
+    :arcStartManga "825" ;
+    :arcEndManga "902" ;
+    :arcStartAnime "783" ;
+    :arcEndAnime "877".
+
+:Luffy_Bounty_Whole_Cake a :Bounty;
+    rdfs:label "Luffy's Bounty after Whole Cake Island Arc"@en ;
+    :bountyAmount "1500000000"^^xsd:integer ;
+    :givenAfter :Whole_Cake_Island_Arc .
+
+:Luffy_Bounty_East_Blue a :Bounty;
+    rdfs:label "Luffy's Bounty after East Blue Saga"@en ;
+    :bountyAmount "30000000"^^xsd:integer ;
+    :givenAfter :East_Blue_Saga .
+
+:East_Blue_Saga a :Arc;
+    rdfs:label "East Blue Saga"@en ;
+    rdfs:label "イーストブルー編"@ja ;
+    rdfs:comment "The East Blue Saga is the first saga in the One Piece series, covering the adventures of the Straw Hat Pirates in the East Blue region." ;
+    :arcStartManga "1" ;
+    :arcEndManga "100" ;
+    :arcStartAnime "1" ;
+    :arcEndAnime "61" .
+
+:Arlong_Park_Arc a :Arc;
+    rdfs:label "Arlong Park Arc"@en ;
+    rdfs:label "アーロンパーク編"@ja ;
+    rdfs:comment "The Arlong Park Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arlong Pirates." ;
+    :arcStartManga "69" ;
+    :arcEndManga "95" ;
+    :arcStartAnime "31" ;
+    :arcEndAnime "44" .
+
+:Roronoa_Zoro a :Character ;
+    rdfs:label "Roronoa Zoro"@en ;
+    rdfs:label "ロロノア・ゾロ"@ja ;
+    skos:altLabel "Zoro"@en ;
+    skos:altLabel "ゾロ"@ja ;
+    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
+    :height 175 ;
+    :placeOfOrigin :Foosha_Village ;
+    :statusOfCharacter :Alive ;
+    :affilatesWith :Straw_Hat_Pirates ;
+    :hasdevilFruit :Gomu_Gomu_no_Mi ;
+    :epithet "Straw Hat"@en ;
+    :hasBounty :Zoro_Bounty_Whole_Cake;
+    :hasBounty :Zoro_Bounty_East_Blue;.
+
+:Zoro_Bounty_Whole_Cake a :Bounty;
+    rdfs:label "Zoro's Bounty after Whole Cake Island Arc"@en ;
+    :bountyAmount "1500000000"^^xsd:integer ;
+    :givenAfter :Whole_Cake_Island_Arc .
+
+:Zoro_Bounty_Arabasta a :Bounty;
+    rdfs:label "Zoro's Bounty after Arabasta Arc"@en ;
+    :bountyAmount "60000000"^^xsd:integer ;
+    :givenAfter :Arabasta_Arc .
+
+:Arabasta_Arc a :Arc;
+    rdfs:label "Arabasta Arc"@en ;
+    rdfs:label "アラバスタ編"@ja ;
+    rdfs:comment "The Arabasta Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arabasta Pirates." ;
+    :arcStartManga "155" ;
+    :arcEndManga "175" ;
+    :arcStartAnime "92" ;
+    :arcEndAnime "130" .
