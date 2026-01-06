@@ -395,3 +395,13 @@ rdfs:comment "The bounty on a pirate's head in berries".
     :arcEndManga "175" ;
     :arcStartAnime "92" ;
     :arcEndAnime "130" .
+
+:Koby a :Character ;
+    rdfs:label "Koby"@en ;
+    rdfs:label "コビー"@ja ;
+    rdfs:comment "Koby is a character from the One Piece series. He is a Marine officer who aspires to become an admiral." ;
+    :height 180 ;
+    :placeOfOrigin :Syrup_Village ;
+    :statusOfCharacter :Alive ;
+    :affilatesWith :Marines .
+
