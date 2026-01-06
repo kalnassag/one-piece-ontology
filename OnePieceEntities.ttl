@@ -1,9 +1,18 @@
 @prefix : <http://kalnassag.com/onepiece#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+
+:Straw_Hat_Pirates a schema:Organization ;
+    rdfs:label "Straw Hat Pirates"@en ;
+    rdfs:label "麦わらの一味"@ja ;
+    rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece." ;
+    schema:founder :Monkey_D_Luffy ;
+    :hasCrewMember :Roronoa_Zoro ;
+    :hasCrewMember :Monkey_D_Luffy ;.
 :Monkey_D_Luffy a :Character , :Pirate ;
     rdfs:label "Monkey D. Luffy"@en ;
     rdfs:label "モンキー・D・ルフィ"@ja ;
@@ -70,7 +79,7 @@
     :arcStartAnime "31" ;
     :arcEndAnime "44" .
 
-:Roronoa_Zoro a :Character ;
+:Roronoa_Zoro a :Character, :Pirate ;
     rdfs:label "Roronoa Zoro"@en ;
     rdfs:label "ロロノア・ゾロ"@ja ;
     skos:altLabel "Zoro"@en ;
@@ -135,4 +144,31 @@
     :hasFruitType :Paramecia ;
     :DevilFruitDebutManga "1" ;
     :DevilFruitDebutAnime "1" ;
-    :DevilFruitCurrentUser :Monkey_D_Luffy .
+    :DevilFruitCurrentUser :Monkey_D_Luffy ;
+    :DevilFruitPreviousUser :Joy_Boy .
+
+:Marines a schema:Organization ;
+    rdfs:label "Marines"@en ;
+    rdfs:label "海軍"@ja ;
+    rdfs:comment "The Marines are the World Government's military sea force, responsible for maintaining law and order across the seas." ;
+    schema:headquarter :Marine_Headquarters .
+
+:Marine_Headquarters a :Location ;
+    rdfs:label "Marine Headquarters"@en ;
+    rdfs:label "海軍本部"@ja ;
+    rdfs:comment "The Marine Headquarters is the central command center for the Marines in the One Piece world." ;
+    schema:location :Marineford .
+
+:Paramecia a :DevilFruitType ;
+    rdfs:label "Paramecia"@en ;
+    rdfs:label "パラミシア"@ja ;
+    rdfs:comment "Paramecia is a type of Devil Fruit that grants the user superhuman abilities or traits that affect their body or surroundings." .
+
+:Logia a :DevilFruitType ;
+    rdfs:label "Logia"@en ;
+    rdfs:label "ロギア"@ja ;
+    rdfs:comment "Logia is a type of Devil Fruit that allows the user to transform into, produce, and control a specific element or substance." .
+:Zoan a :DevilFruitType ;
+    rdfs:label "Zoan"@en ;
+    rdfs:label "ゾオン"@ja ;
+    rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal." .

@@ -66,6 +66,7 @@
     rdfs:comment "A region in the world of One Piece, consisting of multiple kingdoms and islands" ;
     rdfs:subClassOf :Location .
 
+
 :Sea a owl:Class ;
     rdfs:label "Sea" ;
     rdfs:comment "A sea in the world of One Piece" ;
