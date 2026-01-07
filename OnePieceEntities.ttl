@@ -16,6 +16,7 @@
 :Monkey_D_Luffy a :Character , :Pirate ;
     rdfs:label "Monkey D. Luffy"@en ;
     rdfs:label "モンキー・D・ルフィ"@ja ;
+    :romanizedName "Monkī Dī Rufi"@en ;
     skos:altLabel "Luffy"@en ;
     skos:altLabel "ルフィ"@ja ;
     skos:altLabel "Straw Hat Luffy"@en ;
@@ -27,18 +28,26 @@
     foaf:dateOfBirth "05-05"^^xsd:gMonthDay ;
     :placeOfOrigin :Foosha_Village ;
     :statusOfCharacter :Alive ;
-    :affilatesWith :Straw_Hat_Pirates ;
+    :affilatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
     :hasdevilFruit :Gomu_Gomu_no_Mi ;
     :epithet "Straw Hat"@en ;
     :hasBounty :Luffy_Bounty_Whole_Cake ;
     :hasBounty :Luffy_Bounty_East_Blue;
     :race :Human;
-    :citizenOf :Goa_Kingdom .
+    :citizenOf :Goa_Kingdom;
+    :occupation :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;
+    :residence :Foosha_Village, :Mt_Colubo, :Rusukaina;
+    :hasBloodType :BloodType_F;
+    :japaneseVoiceActor :Mayumi_Tanaka, :Urara_Takano;
+    :englishVoiceActor :Colleen_Clinkenbeard, :Chuck_Powers, :Bella_Hudson;
+    :liveActionPortrayedBy :Iñaki_Godoy, :Colton_Osario
+    .
 
 :Foosha_Village a :Location ;
     rdfs:label "Foosha Village"@en ;
     rdfs:label "フーシャ村"@ja ;
-    rdfs:comment "A small village in the East Blue where Monkey D. Luffy grew up." .
+    rdfs:comment "A small village in the East Blue where Monkey D. Luffy grew up.";
+    :locatedIn :East_Blue.
 
 :Whole_Cake_Island_Arc a :Arc;
     rdfs:label "Whole Cake Island Arc"@en ;
@@ -172,3 +181,47 @@
     rdfs:label "Zoan"@en ;
     rdfs:label "ゾオン"@ja ;
     rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal." .
+
+:Pirate_Captain a :Occupation ;
+    rdfs:label "Pirate Captain"@en ;.
+:Emperor a :Occupation ;
+    rdfs:label "Emperor"@en ;.
+
+:Senior_Captain_of_the_Grand_Fleet a :Occupation ;
+    rdfs:label "Senior Captain of the Grand Fleet"@en ;.
+
+:Chore_Boy a :Occupation ;
+    rdfs:label "Chore Boy"@en ;.
+:Prisoner a :Occupation ;
+    rdfs:label "Prisoner"@en ;.
+:Bandit a :Occupation ;
+    rdfs:label "Bandit"@en ;.
+
+:Mayumi_Tanaka a :Person ;
+    rdfs:label "Mayumi Tanaka"@en ;
+    rdfs:label "田中 真弓"@ja ;
+    rdfs:comment "Mayumi Tanaka is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
+
+:Urara_Takano a :Person ;
+    rdfs:label "Urara Takano"@en ; 
+    rdfs:label "高乃 麗"@ja ;
+    rdfs:comment "Urara Takano is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
+
+:Colleen_Clinkenbeard a :Person ;
+    rdfs:label "Colleen Clinkenbeard"@en ;
+    rdfs:comment "Colleen Clinkenbeard is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
+:Chuck_Powers a :Person ;
+    rdfs:label "Chuck Powers"@en ;
+    rdfs:comment "Chuck Powers is an American voice actor known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
+
+:Bella_Hudson a :Person ;
+    rdfs:label "Bella Hudson"@en ;
+    rdfs:comment "Bella Hudson is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
+
+:Iñaki_Godoy a :Person ;
+    rdfs:label "Iñaki Godoy"@en ;
+    rdfs:comment "Iñaki Godoy is a Mexican actor known for portraying Monkey D. Luffy in the live-action adaptation of One Piece." .
+
+:Colton_Osario a :Person ;
+    rdfs:label "Colton Osario"@en ;
+    rdfs:comment "Colton Osario is an actor known for portraying Monkey D. Luffy as a child in the live-action adaptation of One Piece." .

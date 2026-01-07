@@ -1,5 +1,4 @@
 @prefix : <http://kalnassag.com/onepiece#> .
-@prefix a: <> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -15,7 +14,7 @@
 
 
 ###############################################
-##### Classes                             
+##### Classes and properties                        
 ###############################################
 
 :Character a owl:Class ;
@@ -25,6 +24,12 @@
     rdfs:comment "A character in the One Piece universe."@en ;
     rdfs:comment "ワンピースの世界に登場するキャラクター。"@ja ;
     .
+
+:romanizedName a owl:DatatypeProperty ;
+    rdfs:label "Romanized Name"@en ;
+    rdfs:comment "The romanized name of a character" ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:string .
 
 :Affiliation a owl:Class ;
     rdfs:label "Affiliation" ;
@@ -52,7 +57,7 @@
     rdfs:label "Status" ;
     rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" .
 
-:PirateCrew a owl:Class ;
+:PirateCrew a owl:Class, schema:Organization;
     rdfs:label "Pirate Crew" ;
     rdfs:comment "A group of pirates flying under the same jolly roger led by the same captain".
 
@@ -65,7 +70,6 @@
     rdfs:label "Region" ;
     rdfs:comment "A region in the world of One Piece, consisting of multiple kingdoms and islands" ;
     rdfs:subClassOf :Location .
-
 
 :Sea a owl:Class ;
     rdfs:label "Sea" ;
@@ -123,6 +127,15 @@
 rdfs:label "Bounty" ;
 rdfs:comment "The bounty on a pirate's head in berries".
 
+:BloodType a owl:Class ;
+    rdfs:label "Blood Type" ;
+    rdfs:comment "The blood type of a character" .
+
+:liveActionPortrayedBy a owl:ObjectProperty ;
+    rdfs:label "Live Action Portrayed By" ;
+    rdfs:comment "The actor who portrayed the character in the live-action adaptation" ;
+    rdfs:domain :Character ;
+    rdfs:range foaf:Person .
 ###############################################
 ##### Properties                             
 ###############################################
@@ -130,35 +143,32 @@ rdfs:comment "The bounty on a pirate's head in berries".
 ###############################################
 ##### Object Properties                             
 ###############################################
+
+### Character Properties ###
 :residence a owl:ObjectProperty ;
     rdfs:label "Residence" ;
     rdfs:comment "The place where a character currently resides" ;
     rdfs:domain :Character ;
     rdfs:range :Location .
 
-:arcStartManga a owl:ObjectProperty ;
-    rdfs:label "Arc Start Manga" ;
-    rdfs:comment "The manga chapter in which the story arc starts" ;
-    rdfs:domain :Arc ;
-    rdfs:range :MangaIssue .
+:hasBloodType a owl:ObjectProperty ;
+    rdfs:label "Has Blood Type" ;
+    rdfs:comment "The blood type of a character" ;
+    rdfs:domain :Character ;
+    rdfs:range :BloodType .
 
-:arcEndManga a owl:ObjectProperty ;
-    rdfs:label "Arc End Manga" ;
-    rdfs:comment "The manga chapter in which the story arc ends" ;
-    rdfs:domain :Arc ;
-    rdfs:range :MangaIssue .
+:japaneseVoiceActor a owl:ObjectProperty ;
+    rdfs:label "Japanese Voice Actor" ;
+    rdfs:comment "The Japanese voice actor for a character" ;
+    rdfs:domain :Character ;
+    rdfs:range foaf:Person .
 
-:arcStartAnime a owl:ObjectProperty ;
-    rdfs:label "Arc Start Anime" ;
-    rdfs:comment "The anime episode in which the story arc starts" ;
-    rdfs:domain :Arc ;
-    rdfs:range :AnimeEpisode .
+:englishVoiceActor a owl:ObjectProperty ;
+    rdfs:label "English Voice Actor" ;
+    rdfs:comment "The English voice actor for a character" ;
+    rdfs:domain :Character ;
+    rdfs:range foaf:Person .
 
-:arcEndAnime a owl:ObjectProperty ;
-    rdfs:label "Arc End Anime" ;
-    rdfs:comment "The anime episode in which the story arc ends" ;
-    rdfs:domain :Arc ;
-    rdfs:range :AnimeEpisode .
 
 :animeDebut a owl:ObjectProperty ;
     rdfs:label "Anime Debut" ;
@@ -209,37 +219,6 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:domain :Pirate ;
     rdfs:range :PirateCrew.
 
-:hasCrewMember a owl:ObjectProperty ;
-    rdfs:label "Has Crew Member" ;
-    rdfs:comment "A pirate belonging to this crew" ;
-    owl:inverseOf :inCrew ;
-    rdfs:domain :PirateCrew ;
-    rdfs:range :Pirate .
-
-:hasFruitType a owl:ObjectProperty ;
-    rdfs:label "Devil Fruit Type"@en ;
-    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" ;
-    rdfs:domain :DevilFruit ;
-    rdfs:range :DevilFruitType .
-
-:DevilFruitCurrentUser a owl:ObjectProperty ;
-    rdfs:label "Current User" ;
-    rdfs:comment "The current user of the devil fruit" ;
-    rdfs:domain :DevilFruit ;
-    rdfs:range :Character .
-
-:DevilFruitPreviousUser a owl:ObjectProperty ;
-    rdfs:label "Previous User" ;
-    rdfs:comment "A previous user of the devil fruit" ;
-    rdfs:domain :DevilFruit ;
-    rdfs:range :Character .
-
-:locatedIn a owl:ObjectProperty, owl:TransitiveProperty ;
-    rdfs:label "Located In" ;
-    rdfs:comment "The larger location in which this location is found" ;
-    rdfs:domain :Location ;
-    rdfs:range :Location .
-
 :placeOfOrigin a owl:ObjectProperty ;
     rdfs:label "Place of Origin"@en ;
     rdfs:comment "The place where a character is originally from" ;
@@ -251,21 +230,6 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The bounty on a pirate's head in berries" ;
     rdfs:domain :Character ;
     rdfs:range :Bounty .
-
-:givenAfter a owl:ObjectProperty ;
-    rdfs:label "Given After"@en ;
-    rdfs:comment "The arc after which the bounty was given" ;
-    rdfs:domain :Bounty ;
-    rdfs:range :Arc .
-:givenTo a owl:ObjectProperty ;
-    rdfs:label "Given To"@en ; 
-    rdfs:comment "The character to whom the bounty was given" ;
-    rdfs:domain :Bounty ;
-    rdfs:range :Character .
-
-###############################################
-##### Datatype Properties                             
-###############################################
 
 :ageAtDeath a owl:DatatypeProperty ;
     rdfs:label "Age at Death"@en ;
@@ -291,28 +255,86 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:domain :Character ;
     rdfs:range xsd:string .
 
-:DevilFruitDebutManga a owl:DatatypeProperty ;
+### Arc Properties ###
+:arcStartManga a owl:ObjectProperty ;
+    rdfs:label "Arc Start Manga" ;
+    rdfs:comment "The manga chapter in which the story arc starts" ;
+    rdfs:domain :Arc ;
+    rdfs:range :MangaIssue .
+
+:arcEndManga a owl:ObjectProperty ;
+    rdfs:label "Arc End Manga" ;
+    rdfs:comment "The manga chapter in which the story arc ends" ;
+    rdfs:domain :Arc ;
+    rdfs:range :MangaIssue .
+
+:arcStartAnime a owl:ObjectProperty ;
+    rdfs:label "Arc Start Anime" ;
+    rdfs:comment "The anime episode in which the story arc starts" ;
+    rdfs:domain :Arc ;
+    rdfs:range :AnimeEpisode .
+
+:arcEndAnime a owl:ObjectProperty ;
+    rdfs:label "Arc End Anime" ;
+    rdfs:comment "The anime episode in which the story arc ends" ;
+    rdfs:domain :Arc ;
+    rdfs:range :AnimeEpisode .
+
+
+### Pirate Crew Properties ###
+:hasCrewMember a owl:ObjectProperty ;
+    rdfs:label "Has Crew Member" ;
+    rdfs:comment "A pirate belonging to this crew" ;
+    owl:inverseOf :inCrew ;
+    rdfs:domain :PirateCrew ;
+    rdfs:range :Pirate .
+
+### Devil Fruit Properties ###
+:hasFruitType a owl:ObjectProperty ;
+    rdfs:label "Devil Fruit Type"@en ;
+    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :DevilFruitType .
+
+:DevilFruitCurrentUser a owl:ObjectProperty ;
+    rdfs:label "Current User" ;
+    rdfs:comment "The current user of the devil fruit" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :Character .
+
+:DevilFruitPreviousUser a owl:ObjectProperty ;
+    rdfs:label "Previous User" ;
+    rdfs:comment "A previous user of the devil fruit" ;
+    rdfs:domain :DevilFruit ;
+    rdfs:range :Character .
+
+:devilFruitDebutManga a owl:DatatypeProperty ;
     rdfs:label "Devil Fruit Debut"@en ;
     rdfs:comment "The chapter or episode in which the devil fruit first appeared" ;
     rdfs:domain :DevilFruit ;
     rdfs:range :MangaIssue .
 
-:DevilFruitDebutAnime a owl:DatatypeProperty ;
+:devilFruitDebutAnime a owl:DatatypeProperty ;
     rdfs:label "Devil Fruit Debut Anime"@en ;
     rdfs:comment "The anime episode in which the devil fruit first appeared" ;
     rdfs:domain :DevilFruit ;
     rdfs:range :AnimeEpisode .
 
+### Location Properties ###
+:locatedIn a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:label "Located In" ;
+    rdfs:comment "The larger location in which this location is found" ;
+    rdfs:domain :Location ;
+    rdfs:range :Location .
 
-###############################################
-##### Annotation Properties                             
-###############################################
-
-###############################################
-##### Individuals                             
-###############################################
-
-
-##############################################
-##### Example Individuals ####################
-#############################################
+### Bounty Properties ###
+:givenAfter a owl:ObjectProperty ;
+    rdfs:label "Given After"@en ;
+    rdfs:comment "The arc after which the bounty was given" ;
+    rdfs:domain :Bounty ;
+    rdfs:range :Arc .
+:givenTo a owl:ObjectProperty ;
+    rdfs:label "Given To"@en ; 
+    rdfs:comment "The character to whom the bounty was given" ;
+    rdfs:domain :Bounty ;
+    rdfs:range :Character .
