@@ -58,9 +58,42 @@
         }
         #graph {
             width: 100%;
-            height: 600px;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
+        #graph-container {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             border: 1px solid #ddd;
             border-radius: 4px;
+        }
+        #graph-viz {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+        }
+        .file-selector {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .file-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        .file-selector select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
         }
         .loading {
             text-align: center;
@@ -163,6 +196,14 @@
         </div>
 
         <div id="graph" class="tab-content">
+            <div class="file-selector">
+                <label for="file-select">Select file(s) to visualize:</label>
+                <select id="file-select" onchange="reloadGraph()">
+                    <option value="both">Both (Ontology + Entities)</option>
+                    <option value="OnePieceEntities.ttl">OnePieceEntities.ttl</option>
+                    <option value="onepiece-ontology.ttl">onepiece-ontology.ttl</option>
+                </select>
+            </div>
             <div class="loading">Loading graph visualization...</div>
             <div id="graph-container" style="display:none;">
                 <div id="graph-viz"></div>
@@ -199,12 +240,13 @@
     <script>
         let store = null;
         let entities = [];
+        let currentNetwork = null;
 
         function showTab(tabName) {
             // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
+
             // Show selected tab
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
@@ -215,31 +257,44 @@
             }
         }
 
-        async function loadData() {
+        async function loadData(fileSelection = 'both') {
             try {
-                // Load both files
-                const [ontologyResponse, entitiesResponse] = await Promise.all([
-                    fetch('onepiece-ontology.ttl'),
-                    fetch('OnePieceEntities.ttl')
-                ]);
+                let ontologyText = '';
+                let entitiesText = '';
 
-                const ontologyText = await ontologyResponse.text();
-                const entitiesText = await entitiesResponse.text();
+                // Load files based on selection
+                if (fileSelection === 'both') {
+                    const [ontologyResponse, entitiesResponse] = await Promise.all([
+                        fetch('onepiece-ontology.ttl'),
+                        fetch('OnePieceEntities.ttl')
+                    ]);
+                    ontologyText = await ontologyResponse.text();
+                    entitiesText = await entitiesResponse.text();
+                } else if (fileSelection === 'onepiece-ontology.ttl') {
+                    const response = await fetch('onepiece-ontology.ttl');
+                    ontologyText = await response.text();
+                } else if (fileSelection === 'OnePieceEntities.ttl') {
+                    const response = await fetch('OnePieceEntities.ttl');
+                    entitiesText = await response.text();
+                }
 
-                // Display raw data
-                document.getElementById('ontology-raw').textContent = ontologyText;
-                document.getElementById('entities-raw').textContent = entitiesText;
+                // Display raw data (always load both for raw view)
+                if (fileSelection === 'both') {
+                    document.getElementById('ontology-raw').textContent = ontologyText;
+                    document.getElementById('entities-raw').textContent = entitiesText;
+                }
 
                 // Parse RDF
                 const parser = new N3.Parser();
                 const quads = [];
 
-                // Parse both files
-                parser.parse(ontologyText + '\n' + entitiesText, (error, quad, prefixes) => {
+                // Parse selected files
+                const combinedText = ontologyText + '\n' + entitiesText;
+                parser.parse(combinedText, (error, quad, prefixes) => {
                     if (quad) {
                         quads.push(quad);
                     } else {
-                        processQuads(quads);
+                        processQuads(quads, fileSelection === 'both');
                     }
                 });
 
@@ -249,7 +304,29 @@
             }
         }
 
-        function processQuads(quads) {
+        function reloadGraph() {
+            const fileSelect = document.getElementById('file-select');
+            const selectedFile = fileSelect.value;
+
+            // Clear existing graph
+            const graphViz = document.getElementById('graph-viz');
+            graphViz.innerHTML = '';
+
+            // Show loading
+            document.querySelector('#graph .loading').style.display = 'block';
+            document.getElementById('graph-container').style.display = 'none';
+
+            // Destroy existing network
+            if (currentNetwork) {
+                currentNetwork.destroy();
+                currentNetwork = null;
+            }
+
+            // Reload data with selected file
+            loadData(selectedFile);
+        }
+
+        function processQuads(quads, updateStats = true) {
             // Calculate statistics
             const subjects = new Set();
             const classes = new Set();
@@ -258,10 +335,10 @@
 
             quads.forEach(quad => {
                 subjects.add(quad.subject.value);
-                
+
                 if (quad.predicate.value === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
                     classes.add(quad.object.value);
-                    
+
                     // Track characters
                     const charId = quad.subject.value;
                     if (!characters.has(charId)) {
@@ -269,13 +346,13 @@
                     }
                 } else {
                     properties.add(quad.predicate.value);
-                    
+
                     // Add properties to characters
                     const charId = quad.subject.value;
                     if (characters.has(charId)) {
                         const prop = quad.predicate.value.split('#').pop().split('/').pop();
                         const value = quad.object.value;
-                        
+
                         if (quad.predicate.value.includes('label')) {
                             if (quad.object.language === 'en') {
                                 characters.get(charId).enName = value;
@@ -283,23 +360,30 @@
                                 characters.get(charId).jaName = value;
                             }
                         }
-                        
+
                         characters.get(charId).properties[prop] = value;
                     }
                 }
             });
 
-            // Update stats
-            document.getElementById('stat-triples').textContent = quads.length;
-            document.getElementById('stat-characters').textContent = characters.size;
-            document.getElementById('stat-classes').textContent = classes.size;
-            document.getElementById('stat-properties').textContent = properties.size;
+            // Update stats only when loading both files initially
+            if (updateStats) {
+                document.getElementById('stat-triples').textContent = quads.length;
+                document.getElementById('stat-characters').textContent = characters.size;
+                document.getElementById('stat-classes').textContent = classes.size;
+                document.getElementById('stat-properties').textContent = properties.size;
 
-            // Populate table
-            populateTable(Array.from(characters.values()));
-            
+                // Populate table
+                populateTable(Array.from(characters.values()));
+            }
+
             // Store for graph
             entities = Array.from(characters.values());
+
+            // If graph tab is active, reinitialize graph
+            if (document.getElementById('graph').classList.contains('active')) {
+                initGraph();
+            }
         }
 
         function populateTable(characters) {
@@ -339,17 +423,22 @@
         function initGraph() {
             const container = document.getElementById('graph-viz');
             document.querySelector('#graph .loading').style.display = 'none';
-            document.getElementById('graph-container').style.display = 'block';
+            document.getElementById('graph-container').style.display = 'flex';
+
+            // Destroy existing network if any
+            if (currentNetwork) {
+                currentNetwork.destroy();
+            }
 
             // Create nodes and edges from entities
             const nodes = [];
             const edges = [];
-            
-            entities.slice(0, 50).forEach((entity, idx) => {  // Limit to 50 for performance
+
+            entities.slice(0, 100).forEach((entity, idx) => {  // Increased to 100 for better visualization
                 nodes.push({
                     id: idx,
                     label: entity.enName || entity.jaName || 'Unknown',
-                    title: `${entity.enName || ''}\n${entity.jaName || ''}`,
+                    title: `${entity.enName || ''}\n${entity.jaName || ''}\nType: ${entity.type?.split('#').pop() || 'Unknown'}`,
                     group: entity.type?.split('#').pop() || 'Character'
                 });
             });
@@ -359,15 +448,26 @@
                 nodes: {
                     shape: 'dot',
                     size: 16,
-                    font: { size: 14 }
+                    font: { size: 12 }
                 },
                 physics: {
                     enabled: true,
-                    stabilization: { iterations: 100 }
+                    stabilization: { iterations: 100 },
+                    barnesHut: {
+                        gravitationalConstant: -2000,
+                        centralGravity: 0.3,
+                        springLength: 95,
+                        springConstant: 0.04
+                    }
+                },
+                interaction: {
+                    hover: true,
+                    zoomView: true,
+                    dragView: true
                 }
             };
 
-            new vis.Network(container, data, options);
+            currentNetwork = new vis.Network(container, data, options);
         }
 
         // Load data on page load
