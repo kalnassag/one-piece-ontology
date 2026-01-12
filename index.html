@@ -60,45 +60,6 @@
         .tab-content.active {
             display: block;
         }
-        #graph {
-            width: 100%;
-            height: 700px;
-            display: flex;
-            flex-direction: column;
-        }
-        #graph-container {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        #graph-viz {
-            width: 100%;
-            height: 100%;
-            flex: 1;
-        }
-        .file-selector {
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 4px;
-        }
-        .file-selector label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-        .file-selector select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            background: white;
-        }
         .loading {
             text-align: center;
             padding: 40px;
@@ -256,41 +217,30 @@
         </div>
 
         <div id="overview" class="tab-content active">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-characters">-</div>
-                    <div class="stat-label">Characters</div>
+            <div class="loading">Loading data...</div>
+            <div id="overview-content" style="display:none;">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-entities">-</div>
+                        <div class="stat-label">Entities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-triples">-</div>
+                        <div class="stat-label">Total Triples</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-classes">-</div>
+                        <div class="stat-label">Classes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-properties">-</div>
+                        <div class="stat-label">Properties</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-triples">-</div>
-                    <div class="stat-label">Total Triples</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-classes">-</div>
-                    <div class="stat-label">Classes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-properties">-</div>
-                    <div class="stat-label">Properties</div>
-                </div>
-            </div>
-            <h3>About This Dataset</h3>
-            <p>This knowledge graph contains structured data about the One Piece universe, including characters, their relationships, and attributes. The data is represented in RDF (Resource Description Framework) using the Turtle syntax.</p>
-            <p>Use the tabs above to explore the graph visually, browse the data in tables, or view the raw RDF.</p>
-        </div>
-
-        <div id="graph" class="tab-content">
-            <div class="file-selector">
-                <label for="file-select">Select file(s) to visualize:</label>
-                <select id="file-select" onchange="reloadGraph()">
-                    <option value="both">Both (Ontology + Entities)</option>
-                    <option value="OnePieceEntities.ttl">OnePieceEntities.ttl</option>
-                    <option value="onepiece-ontology.ttl">onepiece-ontology.ttl</option>
-                </select>
-            </div>
-            <div class="loading">Loading graph visualization...</div>
-            <div id="graph-container" style="display:none;">
-                <div id="graph-viz"></div>
+                <h3>About This Dataset</h3>
+                <p>This knowledge graph contains structured data about the One Piece universe in RDF format. Browse the tabs above to explore characters, view the ontology structure, or examine the raw RDF triples.</p>
+                <p style="margin-top: 15px;"><strong>Data sources:</strong> One Piece Fandom Wiki</p>
+                <p><strong>Languages:</strong> Japanese (ja), English (en)</p>
             </div>
         </div>
 
@@ -344,56 +294,50 @@
     <script>
         let allQuads = [];
         let entities = [];
-        let currentNetwork = null;
+        let currentTypeFilter = null;
 
         function showTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-
-            // Show selected tab
+            
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
         }
 
-        async function loadData(fileSelection = 'both') {
+        async function loadData() {
             try {
-                let ontologyText = '';
-                let entitiesText = '';
+                const [ontologyResponse, entitiesResponse] = await Promise.all([
+                    fetch('onepiece-ontology.ttl'),
+                    fetch('OnePieceEntities.ttl')
+                ]);
 
-                // Load files based on selection
-                if (fileSelection === 'both') {
-                    const [ontologyResponse, entitiesResponse] = await Promise.all([
-                        fetch('onepiece-ontology.ttl'),
-                        fetch('OnePieceEntities.ttl')
-                    ]);
-                    ontologyText = await ontologyResponse.text();
-                    entitiesText = await entitiesResponse.text();
-                } else if (fileSelection === 'onepiece-ontology.ttl') {
-                    const response = await fetch('onepiece-ontology.ttl');
-                    ontologyText = await response.text();
-                } else if (fileSelection === 'OnePieceEntities.ttl') {
-                    const response = await fetch('OnePieceEntities.ttl');
-                    entitiesText = await response.text();
+                if (!ontologyResponse.ok || !entitiesResponse.ok) {
+                    throw new Error('Failed to load RDF files');
                 }
 
-                // Display raw data (always load both for raw view)
-                if (fileSelection === 'both') {
-                    document.getElementById('ontology-raw').textContent = ontologyText;
-                    document.getElementById('entities-raw').textContent = entitiesText;
-                }
+                const ontologyText = await ontologyResponse.text();
+                const entitiesText = await entitiesResponse.text();
+
+                // Display raw
+                document.getElementById('ontology-raw').textContent = ontologyText;
+                document.getElementById('entities-raw').textContent = entitiesText;
 
                 // Parse RDF
                 const parser = new N3.Parser();
                 const quads = [];
 
-                // Parse selected files
-                const combinedText = ontologyText + '\n' + entitiesText;
-                parser.parse(combinedText, (error, quad, prefixes) => {
-                    if (quad) {
-                        quads.push(quad);
-                    } else {
-                        processQuads(quads, fileSelection === 'both');
-                    }
+                return new Promise((resolve, reject) => {
+                    parser.parse(ontologyText + '\n' + entitiesText, (error, quad) => {
+                        if (error) {
+                            reject(error);
+                        } else if (quad) {
+                            quads.push(quad);
+                        } else {
+                            allQuads = quads;
+                            processData(quads);
+                            resolve();
+                        }
+                    });
                 });
 
             } catch (error) {
@@ -402,30 +346,13 @@
             }
         }
 
-        function reloadGraph() {
-            const fileSelect = document.getElementById('file-select');
-            const selectedFile = fileSelect.value;
-
-            // Clear existing graph
-            const graphViz = document.getElementById('graph-viz');
-            graphViz.innerHTML = '';
-
-            // Show loading
-            document.querySelector('#graph .loading').style.display = 'block';
-            document.getElementById('graph-container').style.display = 'none';
-
-            // Destroy existing network
-            if (currentNetwork) {
-                currentNetwork.destroy();
-                currentNetwork = null;
-            }
-
-            // Reload data with selected file
-            loadData(selectedFile);
+        function showError(message) {
+            document.querySelectorAll('.loading').forEach(el => {
+                el.innerHTML = `<div class="error">${message}</div>`;
+            });
         }
 
-        function processQuads(quads, updateStats = true) {
-            // Calculate statistics
+        function processData(quads) {
             const subjects = new Set();
             const classes = new Set();
             const properties = new Set();
@@ -433,56 +360,58 @@
             const classHierarchy = new Map();
 
             quads.forEach(quad => {
-                subjects.add(quad.subject.value);
+                const s = quad.subject.value;
+                const p = quad.predicate.value;
+                const o = quad.object.value;
 
-                if (quad.predicate.value === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
-                    classes.add(quad.object.value);
+                subjects.add(s);
 
-                    // Track characters
-                    const charId = quad.subject.value;
-                    if (!characters.has(charId)) {
-                        characters.set(charId, { id: charId, type: quad.object.value, properties: {} });
-                    }
-                } else {
-                    properties.add(quad.predicate.value);
-
-                    // Add properties to characters
-                    const charId = quad.subject.value;
-                    if (characters.has(charId)) {
-                        const prop = quad.predicate.value.split('#').pop().split('/').pop();
-                        const value = quad.object.value;
-
-                        if (quad.predicate.value.includes('label')) {
-                            if (quad.object.language === 'en') {
-                                characters.get(charId).enName = value;
-                            } else if (quad.object.language === 'ja') {
-                                characters.get(charId).jaName = value;
-                            }
+                // Track classes and hierarchy
+                if (p === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
+                    if (o.includes('owl#Class') || o.includes('rdfs#Class')) {
+                        classes.add(s);
+                    } else {
+                        classes.add(o);
+                        // Track entities
+                        if (!entityMap.has(s)) {
+                            entityMap.set(s, { id: s, type: o, props: {} });
                         }
-
-                        characters.get(charId).properties[prop] = value;
+                        entityMap.get(s).type = o;
+                    }
+                } else if (p === 'http://www.w3.org/2000/01/rdf-schema#subClassOf') {
+                    if (!classHierarchy.has(o)) classHierarchy.set(o, []);
+                    classHierarchy.get(o).push(s);
+                } else {
+                    properties.add(p);
+                    
+                    // Add property to entity
+                    if (entityMap.has(s)) {
+                        const propName = p.split(/[#\/]/).pop();
+                        if (p.includes('label')) {
+                            const lang = quad.object.language || 'none';
+                            if (lang === 'en') entityMap.get(s).enName = o;
+                            if (lang === 'ja') entityMap.get(s).jaName = o;
+                        }
+                        entityMap.get(s).props[propName] = o;
                     }
                 }
             });
 
-            // Update stats only when loading both files initially
-            if (updateStats) {
-                document.getElementById('stat-triples').textContent = quads.length;
-                document.getElementById('stat-characters').textContent = characters.size;
-                document.getElementById('stat-classes').textContent = classes.size;
-                document.getElementById('stat-properties').textContent = properties.size;
+            // Update stats
+            document.getElementById('stat-triples').textContent = quads.length.toLocaleString();
+            document.getElementById('stat-entities').textContent = entityMap.size.toLocaleString();
+            document.getElementById('stat-classes').textContent = classes.size;
+            document.getElementById('stat-properties').textContent = properties.size;
 
-                // Populate table
-                populateTable(Array.from(characters.values()));
-            }
+            // Show overview
+            document.querySelector('#overview .loading').style.display = 'none';
+            document.getElementById('overview-content').style.display = 'block';
 
-            // Store for graph
-            entities = Array.from(characters.values());
-
-            // If graph tab is active, reinitialize graph
-            if (document.getElementById('graph').classList.contains('active')) {
-                initGraph();
-            }
+            // Populate other views
+            entities = Array.from(entityMap.values());
+            populateTable(entities);
+            populateClassTree(classHierarchy, classes);
+            populateTriples(quads);
         }
 
         function populateTable(ents) {
@@ -553,54 +482,53 @@
             });
         }
 
-        function initGraph() {
-            const container = document.getElementById('graph-viz');
-            document.querySelector('#graph .loading').style.display = 'none';
-            document.getElementById('graph-container').style.display = 'flex';
-
-            // Destroy existing network if any
-            if (currentNetwork) {
-                currentNetwork.destroy();
-            }
-
-            // Create nodes and edges from entities
-            const nodes = [];
-            const edges = [];
-
-            entities.slice(0, 100).forEach((entity, idx) => {  // Increased to 100 for better visualization
-                nodes.push({
-                    id: idx,
-                    label: entity.enName || entity.jaName || 'Unknown',
-                    title: `${entity.enName || ''}\n${entity.jaName || ''}\nType: ${entity.type?.split('#').pop() || 'Unknown'}`,
-                    group: entity.type?.split('#').pop() || 'Character'
+        function renderClass(classUri, hierarchy, container, level) {
+            const className = classUri.split(/[#\/]/).pop();
+            const div = document.createElement('div');
+            div.className = 'class-item';
+            div.style.paddingLeft = (level * 30) + 'px';
+            div.innerHTML = `<span class="class-name">${level > 0 ? '└─ ' : ''}${className}</span>`;
+            container.appendChild(div);
+            
+            if (hierarchy.has(classUri)) {
+                hierarchy.get(classUri).forEach(child => {
+                    renderClass(child, hierarchy, container, level + 1);
                 });
+            }
+        }
+
+        function populateTriples(quads) {
+            const container = document.getElementById('triple-view');
+            container.innerHTML = '';
+            
+            // Show first 200 triples to avoid performance issues
+            quads.slice(0, 200).forEach(quad => {
+                const div = document.createElement('div');
+                div.className = 'triple';
+                const s = quad.subject.value.split(/[#\/]/).pop();
+                const p = quad.predicate.value.split(/[#\/]/).pop();
+                const o = quad.object.value.length > 80 ? 
+                    quad.object.value.substring(0, 80) + '...' : 
+                    (quad.object.value.split(/[#\/]/).pop() || quad.object.value);
+                
+                div.innerHTML = `<span class="subject">${s}</span> <span class="predicate">${p}</span> <span class="object">"${o}"</span>`;
+                container.appendChild(div);
             });
+            
+            if (quads.length > 200) {
+                const note = document.createElement('div');
+                note.style.padding = '15px';
+                note.style.color = '#666';
+                note.textContent = `Showing first 200 of ${quads.length.toLocaleString()} triples. Use search to filter.`;
+                container.appendChild(note);
+            }
+        }
 
-            const data = { nodes: nodes, edges: edges };
-            const options = {
-                nodes: {
-                    shape: 'dot',
-                    size: 16,
-                    font: { size: 12 }
-                },
-                physics: {
-                    enabled: true,
-                    stabilization: { iterations: 100 },
-                    barnesHut: {
-                        gravitationalConstant: -2000,
-                        centralGravity: 0.3,
-                        springLength: 95,
-                        springConstant: 0.04
-                    }
-                },
-                interaction: {
-                    hover: true,
-                    zoomView: true,
-                    dragView: true
-                }
-            };
-
-            currentNetwork = new vis.Network(container, data, options);
+        function filterTriples() {
+            const input = document.getElementById('triple-search').value.toLowerCase();
+            document.querySelectorAll('.triple').forEach(triple => {
+                triple.style.display = triple.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
         }
 
         // Load on page load
