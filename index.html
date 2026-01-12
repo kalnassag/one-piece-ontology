@@ -29,7 +29,33 @@
         }
         .subtitle {
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+        .file-selector {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .file-selector label {
+            font-weight: 600;
+            color: #333;
+        }
+        .file-selector input[type="radio"] {
+            margin-right: 5px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
         .tabs {
             display: flex;
@@ -143,6 +169,7 @@
             background: #f8f9fa;
             border-radius: 4px;
             overflow: auto;
+            max-height: 600px;
         }
         .class-item {
             padding: 5px 0;
@@ -151,18 +178,9 @@
         .class-item:hover {
             background: #e3f2fd;
         }
-        .indent {
-            padding-left: 30px;
-        }
         .class-name {
             color: #1976d2;
             font-weight: 600;
-        }
-        .property-list {
-            margin-top: 5px;
-            padding-left: 20px;
-            color: #666;
-            font-size: 14px;
         }
         .triple-view {
             background: #f8f9fa;
@@ -201,6 +219,47 @@
             color: white;
             border-color: #2196F3;
         }
+        #cy {
+            width: 100%;
+            height: 700px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+        .graph-controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .graph-controls button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .graph-controls button:hover {
+            background: #f0f0f0;
+        }
+        .graph-controls select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .info-panel {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+        .info-panel.visible {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -208,8 +267,27 @@
         <h1>🏴‍☠️ One Piece Knowledge Graph Explorer</h1>
         <p class="subtitle">Explore the structured data of the One Piece universe</p>
         
+        <div class="file-selector">
+            <label>Data Source:</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="dataSource" value="both" checked onchange="reloadData()">
+                    Both Files (Ontology + Entities)
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="dataSource" value="ontology" onchange="reloadData()">
+                    Ontology Only
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="dataSource" value="entities" onchange="reloadData()">
+                    Entities Only
+                </label>
+            </div>
+        </div>
+
         <div class="tabs">
             <button class="tab active" onclick="showTab('overview')">Overview</button>
+            <button class="tab" onclick="showTab('graph')">Graph Visualization</button>
             <button class="tab" onclick="showTab('browse')">Browse Characters</button>
             <button class="tab" onclick="showTab('structure')">Ontology Structure</button>
             <button class="tab" onclick="showTab('triples')">Triple View</button>
@@ -238,10 +316,39 @@
                     </div>
                 </div>
                 <h3>About This Dataset</h3>
-                <p>This knowledge graph contains structured data about the One Piece universe in RDF format. Browse the tabs above to explore characters, view the ontology structure, or examine the raw RDF triples.</p>
+                <p>This knowledge graph contains structured data about the One Piece universe in RDF format. Browse the tabs above to explore characters, visualize the graph, view the ontology structure, or examine the raw RDF triples.</p>
                 <p style="margin-top: 15px;"><strong>Data sources:</strong> One Piece Fandom Wiki</p>
                 <p><strong>Languages:</strong> Japanese (ja), English (en)</p>
             </div>
+        </div>
+
+        <div id="graph" class="tab-content">
+            <div class="graph-controls">
+                <button onclick="resetGraph()">Reset View</button>
+                <button onclick="fitGraph()">Fit to Screen</button>
+                <label>
+                    Layout:
+                    <select id="layout-select" onchange="changeLayout()">
+                        <option value="cose">Force-directed</option>
+                        <option value="circle">Circle</option>
+                        <option value="grid">Grid</option>
+                        <option value="breadthfirst">Hierarchical</option>
+                        <option value="concentric">Concentric</option>
+                    </select>
+                </label>
+                <label>
+                    Max Nodes:
+                    <select id="max-nodes" onchange="reloadGraph()">
+                        <option value="50">50</option>
+                        <option value="100" selected>100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value="all">All</option>
+                    </select>
+                </label>
+            </div>
+            <div id="cy"></div>
+            <div id="node-info" class="info-panel"></div>
         </div>
 
         <div id="browse" class="tab-content">
@@ -283,18 +390,35 @@
         </div>
 
         <div id="raw" class="tab-content">
-            <h3>onepiece-ontology.ttl</h3>
-            <pre id="ontology-raw">Loading...</pre>
-            <h3 style="margin-top: 30px;">OnePieceEntities.ttl</h3>
-            <pre id="entities-raw">Loading...</pre>
+            <div id="raw-content">
+                <div class="loading">Loading...</div>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/n3/browser/n3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
     <script>
         let allQuads = [];
         let entities = [];
         let currentTypeFilter = null;
+        let cy = null;
+        let ontologyText = '';
+        let entitiesText = '';
+
+        function getSelectedSource() {
+            return document.querySelector('input[name="dataSource"]:checked').value;
+        }
+
+        async function reloadData() {
+            // Show loading
+            document.querySelectorAll('.loading').forEach(el => {
+                el.style.display = 'block';
+            });
+            document.getElementById('overview-content').style.display = 'none';
+            
+            await loadData();
+        }
 
         function showTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -302,32 +426,41 @@
             
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
+
+            // Initialize graph when tab is shown
+            if (tabName === 'graph' && !cy) {
+                initGraph();
+            }
         }
 
         async function loadData() {
             try {
-                const [ontologyResponse, entitiesResponse] = await Promise.all([
-                    fetch('onepiece-ontology.ttl'),
-                    fetch('OnePieceEntities.ttl')
-                ]);
-
-                if (!ontologyResponse.ok || !entitiesResponse.ok) {
-                    throw new Error('Failed to load RDF files');
+                const source = getSelectedSource();
+                let textToProcess = '';
+                
+                if (source === 'both' || source === 'ontology') {
+                    const ontologyResponse = await fetch('onepiece-ontology.ttl');
+                    if (!ontologyResponse.ok) throw new Error('Failed to load ontology');
+                    ontologyText = await ontologyResponse.text();
+                    textToProcess += ontologyText;
+                }
+                
+                if (source === 'both' || source === 'entities') {
+                    const entitiesResponse = await fetch('OnePieceEntities.ttl');
+                    if (!entitiesResponse.ok) throw new Error('Failed to load entities');
+                    entitiesText = await entitiesResponse.text();
+                    textToProcess += '\n' + entitiesText;
                 }
 
-                const ontologyText = await ontologyResponse.text();
-                const entitiesText = await entitiesResponse.text();
-
-                // Display raw
-                document.getElementById('ontology-raw').textContent = ontologyText;
-                document.getElementById('entities-raw').textContent = entitiesText;
+                // Update raw view
+                updateRawView(source);
 
                 // Parse RDF
                 const parser = new N3.Parser();
                 const quads = [];
 
                 return new Promise((resolve, reject) => {
-                    parser.parse(ontologyText + '\n' + entitiesText, (error, quad) => {
+                    parser.parse(textToProcess, (error, quad) => {
                         if (error) {
                             reject(error);
                         } else if (quad) {
@@ -335,6 +468,9 @@
                         } else {
                             allQuads = quads;
                             processData(quads);
+                            if (cy) {
+                                reloadGraph();
+                            }
                             resolve();
                         }
                     });
@@ -343,6 +479,30 @@
             } catch (error) {
                 console.error('Error:', error);
                 showError('Failed to load data. Make sure the RDF files are accessible.');
+            }
+        }
+
+        function updateRawView(source) {
+            const rawContent = document.getElementById('raw-content');
+            rawContent.innerHTML = '';
+            
+            if (source === 'both' || source === 'ontology') {
+                const h3 = document.createElement('h3');
+                h3.textContent = 'onepiece-ontology.ttl';
+                const pre = document.createElement('pre');
+                pre.textContent = ontologyText;
+                rawContent.appendChild(h3);
+                rawContent.appendChild(pre);
+            }
+            
+            if (source === 'both' || source === 'entities') {
+                const h3 = document.createElement('h3');
+                h3.textContent = 'OnePieceEntities.ttl';
+                h3.style.marginTop = '30px';
+                const pre = document.createElement('pre');
+                pre.textContent = entitiesText;
+                rawContent.appendChild(h3);
+                rawContent.appendChild(pre);
             }
         }
 
@@ -366,13 +526,11 @@
 
                 subjects.add(s);
 
-                // Track classes and hierarchy
                 if (p === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
                     if (o.includes('owl#Class') || o.includes('rdfs#Class')) {
                         classes.add(s);
                     } else {
                         classes.add(o);
-                        // Track entities
                         if (!entityMap.has(s)) {
                             entityMap.set(s, { id: s, type: o, props: {} });
                         }
@@ -384,7 +542,6 @@
                 } else {
                     properties.add(p);
                     
-                    // Add property to entity
                     if (entityMap.has(s)) {
                         const propName = p.split(/[#\/]/).pop();
                         if (p.includes('label')) {
@@ -397,17 +554,14 @@
                 }
             });
 
-            // Update stats
             document.getElementById('stat-triples').textContent = quads.length.toLocaleString();
             document.getElementById('stat-entities').textContent = entityMap.size.toLocaleString();
             document.getElementById('stat-classes').textContent = classes.size;
             document.getElementById('stat-properties').textContent = properties.size;
 
-            // Show overview
             document.querySelector('#overview .loading').style.display = 'none';
             document.getElementById('overview-content').style.display = 'block';
 
-            // Populate other views
             entities = Array.from(entityMap.values());
             populateTable(entities);
             populateClassTree(classHierarchy, classes);
@@ -418,7 +572,6 @@
             const tbody = document.getElementById('table-body');
             tbody.innerHTML = '';
 
-            // Get unique types for filters
             const types = new Set(ents.map(e => e.type?.split(/[#\/]/).pop()).filter(Boolean));
             const filterContainer = document.getElementById('type-filters');
             filterContainer.innerHTML = '<button class="filter-btn active" onclick="filterByType(null)">All</button>';
@@ -469,9 +622,8 @@
 
         function populateClassTree(hierarchy, classes) {
             const tree = document.getElementById('class-tree');
-            tree.innerHTML = '<div style="margin-bottom: 15px; color: #666;">Click on classes to expand/collapse</div>';
+            tree.innerHTML = '<div style="margin-bottom: 15px; color: #666;">Class hierarchy from the ontology</div>';
             
-            // Find root classes (those not in hierarchy as children)
             const children = new Set();
             hierarchy.forEach(kids => kids.forEach(k => children.add(k)));
             
@@ -501,7 +653,6 @@
             const container = document.getElementById('triple-view');
             container.innerHTML = '';
             
-            // Show first 200 triples to avoid performance issues
             quads.slice(0, 200).forEach(quad => {
                 const div = document.createElement('div');
                 div.className = 'triple';
@@ -531,7 +682,134 @@
             });
         }
 
-        // Load on page load
+        function initGraph() {
+            const maxNodes = document.getElementById('max-nodes').value;
+            const nodesToShow = maxNodes === 'all' ? entities.length : parseInt(maxNodes);
+            
+            const elements = [];
+            const displayEntities = entities.slice(0, nodesToShow);
+            
+            // Create nodes
+            displayEntities.forEach((ent, idx) => {
+                const label = ent.enName || ent.jaName || ent.id.split(/[#\/]/).pop();
+                const type = ent.type?.split(/[#\/]/).pop() || 'Unknown';
+                
+                elements.push({
+                    data: {
+                        id: 'n' + idx,
+                        label: label,
+                        type: type,
+                        entity: ent
+                    }
+                });
+            });
+            
+            // Create edges from relationships in the data
+            allQuads.forEach(quad => {
+                const sourceIdx = displayEntities.findIndex(e => e.id === quad.subject.value);
+                const targetIdx = displayEntities.findIndex(e => e.id === quad.object.value);
+                
+                if (sourceIdx !== -1 && targetIdx !== -1) {
+                    const predicate = quad.predicate.value.split(/[#\/]/).pop();
+                    elements.push({
+                        data: {
+                            source: 'n' + sourceIdx,
+                            target: 'n' + targetIdx,
+                            label: predicate
+                        }
+                    });
+                }
+            });
+
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: elements,
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'background-color': '#2196F3',
+                            'label': 'data(label)',
+                            'color': '#333',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': '12px',
+                            'width': '40px',
+                            'height': '40px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '80px'
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'width': 2,
+                            'line-color': '#ccc',
+                            'target-arrow-color': '#ccc',
+                            'target-arrow-shape': 'triangle',
+                            'curve-style': 'bezier',
+                            'label': 'data(label)',
+                            'font-size': '10px',
+                            'text-rotation': 'autorotate',
+                            'text-margin-y': -10
+                        }
+                    }
+                ],
+                layout: {
+                    name: 'cose',
+                    animate: false,
+                    nodeDimensionsIncludeLabels: true
+                },
+                wheelSensitivity: 0.2,
+                minZoom: 0.1,
+                maxZoom: 3
+            });
+
+            // Add click handler
+            cy.on('tap', 'node', function(evt) {
+                const node = evt.target;
+                const entity = node.data('entity');
+                showNodeInfo(entity);
+            });
+        }
+
+        function showNodeInfo(entity) {
+            const panel = document.getElementById('node-info');
+            let html = '<h4>Entity Details</h4>';
+            html += `<p><strong>English:</strong> ${entity.enName || '-'}</p>`;
+            html += `<p><strong>Japanese:</strong> ${entity.jaName || '-'}</p>`;
+            html += `<p><strong>Type:</strong> ${entity.type?.split(/[#\/]/).pop() || '-'}</p>`;
+            html += `<p><strong>Properties:</strong> ${Object.keys(entity.props).length}</p>`;
+            panel.innerHTML = html;
+            panel.classList.add('visible');
+        }
+
+        function reloadGraph() {
+            if (cy) {
+                cy.destroy();
+                cy = null;
+            }
+            initGraph();
+        }
+
+        function resetGraph() {
+            if (cy) {
+                cy.reset();
+            }
+        }
+
+        function fitGraph() {
+            if (cy) {
+                cy.fit();
+            }
+        }
+
+        function changeLayout() {
+            if (!cy) return;
+            const layoutName = document.getElementById('layout-select').value;
+            cy.layout({ name: layoutName, animate: false }).run();
+        }
+
         window.addEventListener('load', loadData);
     </script>
 </body>
