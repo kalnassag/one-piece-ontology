@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Piece Knowledge Graph Explorer</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background: #f5f5f5;
+            padding: 20px;
         }
         .container {
             max-width: 1400px;
@@ -56,16 +60,18 @@
         .tab-content.active {
             display: block;
         }
-        #graph {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
         .loading {
             text-align: center;
             padding: 40px;
             color: #666;
+            font-size: 18px;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
         }
         .stats {
             display: grid;
@@ -88,24 +94,6 @@
             color: #666;
             margin-top: 5px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #333;
-        }
-        tr:hover {
-            background: #f8f9fa;
-        }
         .search {
             margin-bottom: 20px;
         }
@@ -116,117 +104,221 @@
             border-radius: 4px;
             font-size: 16px;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
         pre {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 4px;
             overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .class-tree {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            overflow: auto;
+        }
+        .class-item {
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        .class-item:hover {
+            background: #e3f2fd;
+        }
+        .indent {
+            padding-left: 30px;
+        }
+        .class-name {
+            color: #1976d2;
+            font-weight: 600;
+        }
+        .property-list {
+            margin-top: 5px;
+            padding-left: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .triple-view {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .triple {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-left: 3px solid #2196F3;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .subject { color: #1976d2; }
+        .predicate { color: #388e3c; }
+        .object { color: #d32f2f; }
+        .filters {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn.active {
+            background: #2196F3;
+            color: white;
+            border-color: #2196F3;
         }
     </style>
-    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script src="https://unpkg.com/n3/browser/n3.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>🏴‍☠️ One Piece Knowledge Graph Explorer</h1>
-        <p class="subtitle">Interactive visualization of the One Piece universe in RDF</p>
+        <p class="subtitle">Explore the structured data of the One Piece universe</p>
         
         <div class="tabs">
             <button class="tab active" onclick="showTab('overview')">Overview</button>
-            <button class="tab" onclick="showTab('graph')">Graph View</button>
-            <button class="tab" onclick="showTab('browse')">Browse Data</button>
-            <button class="tab" onclick="showTab('raw')">Raw RDF</button>
+            <button class="tab" onclick="showTab('browse')">Browse Characters</button>
+            <button class="tab" onclick="showTab('structure')">Ontology Structure</button>
+            <button class="tab" onclick="showTab('triples')">Triple View</button>
+            <button class="tab" onclick="showTab('raw')">Raw Data</button>
         </div>
 
         <div id="overview" class="tab-content active">
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-characters">-</div>
-                    <div class="stat-label">Characters</div>
+            <div class="loading">Loading data...</div>
+            <div id="overview-content" style="display:none;">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-entities">-</div>
+                        <div class="stat-label">Entities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-triples">-</div>
+                        <div class="stat-label">Total Triples</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-classes">-</div>
+                        <div class="stat-label">Classes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-properties">-</div>
+                        <div class="stat-label">Properties</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-triples">-</div>
-                    <div class="stat-label">Total Triples</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-classes">-</div>
-                    <div class="stat-label">Classes</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="stat-properties">-</div>
-                    <div class="stat-label">Properties</div>
-                </div>
-            </div>
-            <h3>About This Dataset</h3>
-            <p>This knowledge graph contains structured data about the One Piece universe, including characters, their relationships, and attributes. The data is represented in RDF (Resource Description Framework) using the Turtle syntax.</p>
-            <p>Use the tabs above to explore the graph visually, browse the data in tables, or view the raw RDF.</p>
-        </div>
-
-        <div id="graph" class="tab-content">
-            <div class="loading">Loading graph visualization...</div>
-            <div id="graph-container" style="display:none;">
-                <div id="graph-viz"></div>
+                <h3>About This Dataset</h3>
+                <p>This knowledge graph contains structured data about the One Piece universe in RDF format. Browse the tabs above to explore characters, view the ontology structure, or examine the raw RDF triples.</p>
+                <p style="margin-top: 15px;"><strong>Data sources:</strong> One Piece Fandom Wiki</p>
+                <p><strong>Languages:</strong> Japanese (ja), English (en)</p>
             </div>
         </div>
 
         <div id="browse" class="tab-content">
             <div class="search">
-                <input type="text" id="search-input" placeholder="Search characters by name..." onkeyup="filterTable()">
+                <input type="text" id="search-input" placeholder="Search by English or Japanese name..." onkeyup="filterTable()">
             </div>
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th>English Name</th>
-                        <th>Japanese Name</th>
-                        <th>Type</th>
-                        <th>Properties</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                    <tr><td colspan="4" class="loading">Loading data...</td></tr>
-                </tbody>
-            </table>
+            <div class="filters" id="type-filters"></div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>English Name</th>
+                            <th>Japanese Name</th>
+                            <th>Type</th>
+                            <th>Additional Info</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr><td colspan="4" class="loading">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="structure" class="tab-content">
+            <h3>Ontology Class Hierarchy</h3>
+            <div id="class-tree" class="class-tree">
+                <div class="loading">Loading ontology structure...</div>
+            </div>
+        </div>
+
+        <div id="triples" class="tab-content">
+            <div class="search">
+                <input type="text" id="triple-search" placeholder="Filter triples..." onkeyup="filterTriples()">
+            </div>
+            <div id="triple-view" class="triple-view">
+                <div class="loading">Loading triples...</div>
+            </div>
         </div>
 
         <div id="raw" class="tab-content">
-            <h3>Ontology (onepiece-ontology.ttl)</h3>
+            <h3>onepiece-ontology.ttl</h3>
             <pre id="ontology-raw">Loading...</pre>
-            <h3>Entities (OnePieceEntities.ttl)</h3>
+            <h3 style="margin-top: 30px;">OnePieceEntities.ttl</h3>
             <pre id="entities-raw">Loading...</pre>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/n3/browser/n3.min.js"></script>
     <script>
-        let store = null;
+        let allQuads = [];
         let entities = [];
+        let currentTypeFilter = null;
 
         function showTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
-
-            // Initialize graph if first time viewing
-            if (tabName === 'graph' && !document.getElementById('graph-viz').innerHTML) {
-                initGraph();
-            }
         }
 
         async function loadData() {
             try {
-                // Load both files
                 const [ontologyResponse, entitiesResponse] = await Promise.all([
                     fetch('onepiece-ontology.ttl'),
                     fetch('OnePieceEntities.ttl')
                 ]);
 
+                if (!ontologyResponse.ok || !entitiesResponse.ok) {
+                    throw new Error('Failed to load RDF files');
+                }
+
                 const ontologyText = await ontologyResponse.text();
                 const entitiesText = await entitiesResponse.text();
 
-                // Display raw data
+                // Display raw
                 document.getElementById('ontology-raw').textContent = ontologyText;
                 document.getElementById('entities-raw').textContent = entitiesText;
 
@@ -234,144 +326,213 @@
                 const parser = new N3.Parser();
                 const quads = [];
 
-                // Parse both files
-                parser.parse(ontologyText + '\n' + entitiesText, (error, quad, prefixes) => {
-                    if (quad) {
-                        quads.push(quad);
-                    } else {
-                        processQuads(quads);
-                    }
+                return new Promise((resolve, reject) => {
+                    parser.parse(ontologyText + '\n' + entitiesText, (error, quad) => {
+                        if (error) {
+                            reject(error);
+                        } else if (quad) {
+                            quads.push(quad);
+                        } else {
+                            allQuads = quads;
+                            processData(quads);
+                            resolve();
+                        }
+                    });
                 });
 
             } catch (error) {
-                console.error('Error loading data:', error);
-                alert('Error loading RDF files. Make sure they are in the same directory.');
+                console.error('Error:', error);
+                showError('Failed to load data. Make sure the RDF files are accessible.');
             }
         }
 
-        function processQuads(quads) {
-            // Calculate statistics
+        function showError(message) {
+            document.querySelectorAll('.loading').forEach(el => {
+                el.innerHTML = `<div class="error">${message}</div>`;
+            });
+        }
+
+        function processData(quads) {
             const subjects = new Set();
             const classes = new Set();
             const properties = new Set();
-            const characters = new Map();
+            const entityMap = new Map();
+            const classHierarchy = new Map();
 
             quads.forEach(quad => {
-                subjects.add(quad.subject.value);
-                
-                if (quad.predicate.value === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
-                    classes.add(quad.object.value);
-                    
-                    // Track characters
-                    const charId = quad.subject.value;
-                    if (!characters.has(charId)) {
-                        characters.set(charId, { id: charId, type: quad.object.value, properties: {} });
-                    }
-                } else {
-                    properties.add(quad.predicate.value);
-                    
-                    // Add properties to characters
-                    const charId = quad.subject.value;
-                    if (characters.has(charId)) {
-                        const prop = quad.predicate.value.split('#').pop().split('/').pop();
-                        const value = quad.object.value;
-                        
-                        if (quad.predicate.value.includes('label')) {
-                            if (quad.object.language === 'en') {
-                                characters.get(charId).enName = value;
-                            } else if (quad.object.language === 'ja') {
-                                characters.get(charId).jaName = value;
-                            }
+                const s = quad.subject.value;
+                const p = quad.predicate.value;
+                const o = quad.object.value;
+
+                subjects.add(s);
+
+                // Track classes and hierarchy
+                if (p === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
+                    if (o.includes('owl#Class') || o.includes('rdfs#Class')) {
+                        classes.add(s);
+                    } else {
+                        classes.add(o);
+                        // Track entities
+                        if (!entityMap.has(s)) {
+                            entityMap.set(s, { id: s, type: o, props: {} });
                         }
-                        
-                        characters.get(charId).properties[prop] = value;
+                        entityMap.get(s).type = o;
+                    }
+                } else if (p === 'http://www.w3.org/2000/01/rdf-schema#subClassOf') {
+                    if (!classHierarchy.has(o)) classHierarchy.set(o, []);
+                    classHierarchy.get(o).push(s);
+                } else {
+                    properties.add(p);
+                    
+                    // Add property to entity
+                    if (entityMap.has(s)) {
+                        const propName = p.split(/[#\/]/).pop();
+                        if (p.includes('label')) {
+                            const lang = quad.object.language || 'none';
+                            if (lang === 'en') entityMap.get(s).enName = o;
+                            if (lang === 'ja') entityMap.get(s).jaName = o;
+                        }
+                        entityMap.get(s).props[propName] = o;
                     }
                 }
             });
 
             // Update stats
-            document.getElementById('stat-triples').textContent = quads.length;
-            document.getElementById('stat-characters').textContent = characters.size;
+            document.getElementById('stat-triples').textContent = quads.length.toLocaleString();
+            document.getElementById('stat-entities').textContent = entityMap.size.toLocaleString();
             document.getElementById('stat-classes').textContent = classes.size;
             document.getElementById('stat-properties').textContent = properties.size;
 
-            // Populate table
-            populateTable(Array.from(characters.values()));
-            
-            // Store for graph
-            entities = Array.from(characters.values());
+            // Show overview
+            document.querySelector('#overview .loading').style.display = 'none';
+            document.getElementById('overview-content').style.display = 'block';
+
+            // Populate other views
+            entities = Array.from(entityMap.values());
+            populateTable(entities);
+            populateClassTree(classHierarchy, classes);
+            populateTriples(quads);
         }
 
-        function populateTable(characters) {
+        function populateTable(ents) {
             const tbody = document.getElementById('table-body');
             tbody.innerHTML = '';
 
-            characters.forEach(char => {
+            // Get unique types for filters
+            const types = new Set(ents.map(e => e.type?.split(/[#\/]/).pop()).filter(Boolean));
+            const filterContainer = document.getElementById('type-filters');
+            filterContainer.innerHTML = '<button class="filter-btn active" onclick="filterByType(null)">All</button>';
+            types.forEach(type => {
+                filterContainer.innerHTML += `<button class="filter-btn" onclick="filterByType('${type}')">${type}</button>`;
+            });
+
+            ents.forEach(ent => {
                 const row = tbody.insertRow();
-                row.insertCell(0).textContent = char.enName || '-';
-                row.insertCell(1).textContent = char.jaName || '-';
-                row.insertCell(2).textContent = char.type?.split('#').pop() || '-';
-                row.insertCell(3).textContent = Object.keys(char.properties).length;
+                row.className = 'entity-row';
+                row.dataset.type = ent.type?.split(/[#\/]/).pop() || '';
+                
+                row.insertCell(0).textContent = ent.enName || '-';
+                row.insertCell(1).textContent = ent.jaName || '-';
+                row.insertCell(2).textContent = ent.type?.split(/[#\/]/).pop() || '-';
+                
+                const propsCell = row.insertCell(3);
+                const propCount = Object.keys(ent.props).length;
+                propsCell.textContent = `${propCount} properties`;
+                propsCell.style.color = '#666';
+                propsCell.style.fontSize = '14px';
+            });
+        }
+
+        function filterByType(type) {
+            currentTypeFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.entity-row').forEach(row => {
+                if (!type || row.dataset.type === type) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
         }
 
         function filterTable() {
-            const input = document.getElementById('search-input');
-            const filter = input.value.toLowerCase();
-            const table = document.getElementById('data-table');
-            const rows = table.getElementsByTagName('tr');
+            const input = document.getElementById('search-input').value.toLowerCase();
+            document.querySelectorAll('.entity-row').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const matchesSearch = text.includes(input);
+                const matchesType = !currentTypeFilter || row.dataset.type === currentTypeFilter;
+                row.style.display = (matchesSearch && matchesType) ? '' : 'none';
+            });
+        }
 
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                let found = false;
-                
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].textContent.toLowerCase().includes(filter)) {
-                        found = true;
-                        break;
-                    }
-                }
-                
-                rows[i].style.display = found ? '' : 'none';
+        function populateClassTree(hierarchy, classes) {
+            const tree = document.getElementById('class-tree');
+            tree.innerHTML = '<div style="margin-bottom: 15px; color: #666;">Click on classes to expand/collapse</div>';
+            
+            // Find root classes (those not in hierarchy as children)
+            const children = new Set();
+            hierarchy.forEach(kids => kids.forEach(k => children.add(k)));
+            
+            const roots = Array.from(classes).filter(c => !children.has(c));
+            
+            roots.forEach(root => {
+                renderClass(root, hierarchy, tree, 0);
+            });
+        }
+
+        function renderClass(classUri, hierarchy, container, level) {
+            const className = classUri.split(/[#\/]/).pop();
+            const div = document.createElement('div');
+            div.className = 'class-item';
+            div.style.paddingLeft = (level * 30) + 'px';
+            div.innerHTML = `<span class="class-name">${level > 0 ? '└─ ' : ''}${className}</span>`;
+            container.appendChild(div);
+            
+            if (hierarchy.has(classUri)) {
+                hierarchy.get(classUri).forEach(child => {
+                    renderClass(child, hierarchy, container, level + 1);
+                });
             }
         }
 
-        function initGraph() {
-            const container = document.getElementById('graph-viz');
-            document.querySelector('#graph .loading').style.display = 'none';
-            document.getElementById('graph-container').style.display = 'block';
-
-            // Create nodes and edges from entities
-            const nodes = [];
-            const edges = [];
+        function populateTriples(quads) {
+            const container = document.getElementById('triple-view');
+            container.innerHTML = '';
             
-            entities.slice(0, 50).forEach((entity, idx) => {  // Limit to 50 for performance
-                nodes.push({
-                    id: idx,
-                    label: entity.enName || entity.jaName || 'Unknown',
-                    title: `${entity.enName || ''}\n${entity.jaName || ''}`,
-                    group: entity.type?.split('#').pop() || 'Character'
-                });
+            // Show first 200 triples to avoid performance issues
+            quads.slice(0, 200).forEach(quad => {
+                const div = document.createElement('div');
+                div.className = 'triple';
+                const s = quad.subject.value.split(/[#\/]/).pop();
+                const p = quad.predicate.value.split(/[#\/]/).pop();
+                const o = quad.object.value.length > 80 ? 
+                    quad.object.value.substring(0, 80) + '...' : 
+                    (quad.object.value.split(/[#\/]/).pop() || quad.object.value);
+                
+                div.innerHTML = `<span class="subject">${s}</span> <span class="predicate">${p}</span> <span class="object">"${o}"</span>`;
+                container.appendChild(div);
             });
-
-            const data = { nodes: nodes, edges: edges };
-            const options = {
-                nodes: {
-                    shape: 'dot',
-                    size: 16,
-                    font: { size: 14 }
-                },
-                physics: {
-                    enabled: true,
-                    stabilization: { iterations: 100 }
-                }
-            };
-
-            new vis.Network(container, data, options);
+            
+            if (quads.length > 200) {
+                const note = document.createElement('div');
+                note.style.padding = '15px';
+                note.style.color = '#666';
+                note.textContent = `Showing first 200 of ${quads.length.toLocaleString()} triples. Use search to filter.`;
+                container.appendChild(note);
+            }
         }
 
-        // Load data on page load
-        loadData();
+        function filterTriples() {
+            const input = document.getElementById('triple-search').value.toLowerCase();
+            document.querySelectorAll('.triple').forEach(triple => {
+                triple.style.display = triple.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+
+        // Load on page load
+        window.addEventListener('load', loadData);
     </script>
 </body>
 </html>
