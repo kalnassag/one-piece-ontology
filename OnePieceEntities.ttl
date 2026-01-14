@@ -1,10 +1,10 @@
 @prefix : <http://kalnassag.com/onepiece#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
 
 :Straw_Hat_Pirates a schema:Organization ;
     rdfs:label "Straw Hat Pirates"@en ;
@@ -13,34 +13,49 @@
     schema:founder :Monkey_D_Luffy ;
     :hasCrewMember :Roronoa_Zoro ;
     :hasCrewMember :Monkey_D_Luffy ;.
+
+
 :Monkey_D_Luffy a :Character , :Pirate ;
     rdfs:label "Monkey D. Luffy"@en ;
     rdfs:label "モンキー・D・ルフィ"@ja ;
     :romanizedName "Monkī Dī Rufi"@en ;
-    skos:altLabel "Luffy"@en ;
-    skos:altLabel "ルフィ"@ja ;
-    skos:altLabel "Straw Hat Luffy"@en ;
-    skos:altLabel "Captain Crackhead"@en ;
-    skos:altLabel "麦わらのルフィ"@ja ;
-    skos:altLabel "Monkī Dī Rufi"@en ;
     rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece." ;
-    :height 172 ;
-    foaf:dateOfBirth "05-05"^^xsd:gMonthDay ;
-    :placeOfOrigin :Foosha_Village ;
-    :statusOfCharacter :Alive ;
+    :mangaDebut :Chapter_1;
+    :animeDebut :Episode_1;
     :affilatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
-    :hasdevilFruit :Gomu_Gomu_no_Mi ;
-    :epithet "Straw Hat"@en ;
-    :hasBounty :Luffy_Bounty_Whole_Cake ;
-    :hasBounty :Luffy_Bounty_East_Blue;
+    :occupation :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;    
+    :placeOfOrigin :Foosha_Village ;
+    :residence :Foosha_Village, :Mt_Colubo, :Rusukaina;
+    :temporaryAlias "Lucy"@en, "ルーシー"@ja;
+    :temporaryAlias "Luffytaro"@en, "ルフィ太郎"@ja;
+    :temporaryAlias "Luffy-no-Umi"@en, "ルフィの海"@ja;
+    :alias "Joy Boy"@en, "ジョイボーイ"@ja;
+    :alias "Captain Crackhead"@en ;
+    :epithet "Straw Hat Luffy"@en, "麦わらのルフィ"@ja;
+
+    :statusOfCharacter :Alive ;
+    foaf:dateOfBirth "05-05"^^xsd:gMonthDay ; 
+    :height 172 ;
+    :hasBloodType :BloodType_F ;
     :race :Human;
     :citizenOf :Goa_Kingdom;
-    :occupation :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;
-    :residence :Foosha_Village, :Mt_Colubo, :Rusukaina;
-    :hasBloodType :BloodType_F;
+
+    ### Bounties
+    :hasBounty :Luffy_Bounty_Arlong_Park;
+    :hasBounty :Luffy_Bounty_Arabasta;
+    :hasBounty :Luffy_Bounty_Fishman_Island;
+    :hasBounty :Luffy_Bounty_Enies_Lobby;
+    :hasBounty :Luffy_Bounty_Summit_War;
+    :hasBounty :Luffy_Bounty_Dressrosa;
+    :hasBounty :Luffy_Bounty_Whole_Cake;
+    :hasBounty :Luffy_Bounty_Wano;    
+    ### Portrayals
     :japaneseVoiceActor :Mayumi_Tanaka, :Urara_Takano;
     :englishVoiceActor :Colleen_Clinkenbeard, :Chuck_Powers, :Bella_Hudson;
-    :liveActionPortrayedBy :Iñaki_Godoy, :Colton_Osario
+    :liveActionPortrayedBy :Iñaki_Godoy, :Colton_Osario;
+
+    ### Devil Fruit
+    :hasdevilFruit :Gomu_Gomu_no_Mi ;
     .
 
 :Foosha_Village a :Location ;
@@ -65,10 +80,10 @@
     :givenAfter :Whole_Cake_Island_Arc;
     :givenTo :Monkey_D_Luffy .
 
-:Luffy_Bounty_East_Blue a :Bounty;
-    rdfs:label "Luffy's Bounty after East Blue Saga"@en ;
+:Luffy_Bounty_Arlong_Park a :Bounty;
+    rdfs:label "Luffy's Bounty after the conclution of the Arlong Park arc, which also concluded the East Blue Saga"@en ;
     :bountyAmount "30000000"^^xsd:integer ;
-    :givenAfter :East_Blue_Saga .
+    :givenAfter :Arlong_Park_Arc .
 
 :East_Blue_Saga a :Arc;
     rdfs:label "East Blue Saga"@en ;
@@ -94,13 +109,12 @@
     skos:altLabel "Zoro"@en ;
     skos:altLabel "ゾロ"@ja ;
     rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
-    :height 175 ;
-    :placeOfOrigin :Foosha_Village ;
     :statusOfCharacter :Alive ;
     :affilatesWith :Straw_Hat_Pirates ;
-    :hasdevilFruit :Gomu_Gomu_no_Mi ;
-    :epithet "Straw Hat"@en ;
-    :hasBounty :Zoro_Bounty_Whole_Cake;.
+    :epithet "Pirate Hunter Zoro"@en ;
+    :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
+    :hasBounty :Zoro_Bounty_Whole_Cake;
+    :hasBounty :Zoro_Bounty_Arabasta.
 
 :Zoro_Bounty_Whole_Cake a :Bounty;
     rdfs:label "Zoro's Bounty after Whole Cake Island Arc"@en ;
@@ -159,15 +173,19 @@
 :Marines a schema:Organization ;
     rdfs:label "Marines"@en ;
     rdfs:label "海軍"@ja ;
-    rdfs:comment "The Marines are the World Government's military sea force, responsible for maintaining law and order across the seas." ;
+    rdfs:comment "The Marines are the World Government's military sea force, responsible for maintaining law and order across the seas."@en ;
     schema:headquarter :Marine_Headquarters .
 
-:Marine_Headquarters a :Location ;
+:Marine_Headquarters a schema:Organization ;
     rdfs:label "Marine Headquarters"@en ;
     rdfs:label "海軍本部"@ja ;
-    rdfs:comment "The Marine Headquarters is the central command center for the Marines in the One Piece world." ;
-    schema:location :Marineford .
+    rdfs:comment "The Marine Headquarters is the central command center for the Marines in the One Piece world."@en ;
+    :location :Marineford .
 
+:Marineford a :Island;
+    rdfs:label "Marineford"@en;
+    rdfs:label "マリンフォード"@ja;
+    rdfs:comment "Marineford was the island of the base of operations for Marine Headquarters, where now the Marine Base G-1 is situated."@en.
 :Paramecia a :DevilFruitType ;
     rdfs:label "Paramecia"@en ;
     rdfs:label "パラミシア"@ja ;
@@ -197,12 +215,12 @@
 :Bandit a :Occupation ;
     rdfs:label "Bandit"@en ;.
 
-:Mayumi_Tanaka a :Person ;
+:Mayumi_Tanaka a schema:Person ;
     rdfs:label "Mayumi Tanaka"@en ;
     rdfs:label "田中 真弓"@ja ;
     rdfs:comment "Mayumi Tanaka is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
 
-:Urara_Takano a :Person ;
+:Urara_Takano a schema:Person ;
     rdfs:label "Urara Takano"@en ; 
     rdfs:label "高乃 麗"@ja ;
     rdfs:comment "Urara Takano is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
@@ -210,18 +228,18 @@
 :Colleen_Clinkenbeard a :Person ;
     rdfs:label "Colleen Clinkenbeard"@en ;
     rdfs:comment "Colleen Clinkenbeard is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
-:Chuck_Powers a :Person ;
+:Chuck_Powers a schema:Person ;
     rdfs:label "Chuck Powers"@en ;
     rdfs:comment "Chuck Powers is an American voice actor known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
 
-:Bella_Hudson a :Person ;
+:Bella_Hudson a schema:Person ;
     rdfs:label "Bella Hudson"@en ;
     rdfs:comment "Bella Hudson is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
 
-:Iñaki_Godoy a :Person ;
+:Iñaki_Godoy a schema:Person ;
     rdfs:label "Iñaki Godoy"@en ;
     rdfs:comment "Iñaki Godoy is a Mexican actor known for portraying Monkey D. Luffy in the live-action adaptation of One Piece." .
 
-:Colton_Osario a :Person ;
+:Colton_Osario a schema:Person ;
     rdfs:label "Colton Osario"@en ;
     rdfs:comment "Colton Osario is an actor known for portraying Monkey D. Luffy as a child in the live-action adaptation of One Piece." .

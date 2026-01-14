@@ -1,5 +1,6 @@
 @prefix : <http://kalnassag.com/onepiece#> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -16,7 +17,6 @@
 ###############################################
 ##### Classes and properties                        
 ###############################################
-
 :Character a owl:Class ;
     rdfs:subClassOf dbo:FictionalCharacter ;
     rdfs:label "One Piece Character"@en ;
@@ -26,6 +26,25 @@
     rdfs:comment "A character in the One Piece universe."@en ;
     rdfs:comment "ワンピースの世界に登場するキャラクター。"@ja ;
     .
+:alias a owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:alternateName ;
+    rdfs:label "Alias"@en, "別名"@ja ;
+    rdfs:comment "An epithet, nickname or alternative name by which a character is known"@en ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:string .
+:epithet a owl:DatatypeProperty ;
+    rdfs:subPropertyOf :alias ;
+    rdfs:label "Epithet"@en, "通り名"@ja ;
+    rdfs:comment "An epithet (通り名, Tōrina?) is a reputational title attached to a person, usually based on some well-known attribute—such as physical traits, personalities, or deeds."@en ;
+    rdfs:domain :Character ;
+    rdfs:range xsd:string .
+
+:temporaryAlias a owl:DatatypeProperty ;
+    rdfs:subPropertyOf :alias ;
+    rdfs:label "Temporary Alias"@en, "仮の別名"@ja ;
+    rdfs:comment "A temporary alias or codename used by a character"@en;
+    rdfs:domain :Character ;
+    rdfs:range xsd:string .
 
 :romanizedName a owl:DatatypeProperty ;
     rdfs:label "Romanized Name"@en ;
@@ -59,7 +78,8 @@
     rdfs:label "Status" ;
     rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" .
 
-:PirateCrew a owl:Class, schema:Organization;
+:PirateCrew a owl:Class;
+    rdfs:subClassOf schema:Organization;
     rdfs:label "Pirate Crew" ;
     rdfs:comment "A group of pirates flying under the same jolly roger led by the same captain".
 
@@ -143,6 +163,39 @@ rdfs:comment "The bounty on a pirate's head in berries".
 ###############################################
 
 ###############################################
+##### Identifier Properties
+###############################################
+
+# Internal unique identifier (REQUIRED FOR ALL ENTITIES)
+:internalID a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "Internal ID"@en ;
+    rdfs:label "内部ID"@ja ;
+    rdfs:comment "Unique internal identifier assigned by this knowledge graph, required for all entities in the graph."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+# Extenral source identifiers (OPTIONAL, multiple allowed)
+:dbpediaID a owl:DatatypeProperty ;
+    rdfs:subPropertyOf dcterms:identifier ;
+    rdfs:label "DBpedia ID"@en ;
+    rdfs:comment "The DBpedia identifier for this entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+:opwikiID a owl:DatatypeProperty ;
+    rdfs:label "One Piece Wiki ID"@en ;
+    rdfs:comment "The One Piece Wiki identifier for this entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+:wikipediaOD a owl:DatatypeProperty ;
+    rdfs:subPropertyOf dcterms:identifier ;
+    rdfs:label "Wikipedia OD"@en ;
+    rdfs:comment "The Wikipedia Open Data identifier for this entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+###############################################
 ##### Object Properties                             
 ###############################################
 
@@ -170,7 +223,6 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The English voice actor for a character" ;
     rdfs:domain :Character ;
     rdfs:range foaf:Person .
-
 
 :animeDebut a owl:ObjectProperty ;
     rdfs:label "Anime Debut"@en ;
@@ -281,6 +333,13 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The anime episode in which the story arc ends" ;
     rdfs:domain :Arc ;
     rdfs:range :AnimeEpisode .
+
+:containsArc a owl:ObjectProperty ;
+    rdfs:label "Contains Arc"@en ;
+    rdfs:label "包含する編"@ja ;
+    rdfs:comment "The story arcs contained within a larger arc or saga" ;
+    rdfs:domain :Arc ;
+    rdfs:range :Arc .
 
 
 ### Pirate Crew Properties ###
