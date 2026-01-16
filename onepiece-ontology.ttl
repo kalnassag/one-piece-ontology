@@ -79,7 +79,7 @@
     rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" .
 
 :PirateCrew a owl:Class;
-    rdfs:subClassOf schema:Organization;
+    rdf:type schema:Organization;
     rdfs:label "Pirate Crew" ;
     rdfs:comment "A group of pirates flying under the same jolly roger led by the same captain".
 
@@ -130,8 +130,12 @@
     rdfs:comment "Races, sometimes referred to as Tribes, are groups of sentient beings that share distinctive physical traits. Many races coexist in the world, with some originating from the moon and beyond." .
 
 :DevilFruitType a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:oneOf ( :Paramecia :Zoan :Logia )
+    ];
     rdfs:label "Devil Fruit Type" ;
-    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" .
+    rdfs:comment "The type of devil fruit (Paramecia, Zoan, or Logia)" ;.
 
 :Arc a owl:Class ;
     rdfs:label "Story Arc" ;
@@ -142,8 +146,8 @@
     rdfs:comment "A manga issue of the One Piece series" ;.
 
 :AnimeEpisode a owl:Class ;
-    rdfs:label "Anime Episode" ;
-    rdfs:comment "An anime episode of the One Piece series" ;.
+    rdfs:label "Anime Episode"@en ;
+    rdfs:comment "An anime episode of the One Piece series"@en ;.
 
 :Bounty a owl:Class;
 rdfs:label "Bounty" ;
@@ -283,7 +287,8 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:label "Has Bounty"@en ;
     rdfs:comment "The bounty on a pirate's head in berries" ;
     rdfs:domain :Character ;
-    rdfs:range :Bounty .
+    rdfs:range :Bounty ;
+    rdfs:inverseOf :givenTo.
 
 :ageAtDeath a owl:DatatypeProperty ;
     rdfs:label "Age at Death"@en ;
@@ -323,7 +328,7 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:range :MangaIssue .
 
 :arcStartAnime a owl:ObjectProperty ;
-    rdfs:label "Arc Start Anime" @en;
+    rdfs:label "Arc Start Anime"@en ;
     rdfs:comment "The anime episode in which the story arc starts" ;
     rdfs:domain :Arc ;
     rdfs:range :AnimeEpisode .

@@ -6,7 +6,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-:Straw_Hat_Pirates a schema:Organization ;
+:Straw_Hat_Pirates rdf:type schema:Organization ;
     rdfs:label "Straw Hat Pirates"@en ;
     rdfs:label "麦わらの一味"@ja ;
     rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece." ;
@@ -43,7 +43,6 @@
     ### Bounties
     :hasBounty :Luffy_Bounty_Arlong_Park;
     :hasBounty :Luffy_Bounty_Arabasta;
-    :hasBounty :Luffy_Bounty_Fishman_Island;
     :hasBounty :Luffy_Bounty_Enies_Lobby;
     :hasBounty :Luffy_Bounty_Summit_War;
     :hasBounty :Luffy_Bounty_Dressrosa;
@@ -74,12 +73,6 @@
     :arcStartAnime "783" ;
     :arcEndAnime "877".
 
-:Luffy_Bounty_Whole_Cake a :Bounty;
-    rdfs:label "Luffy's Bounty after Whole Cake Island Arc"@en ;
-    :bountyAmount "1500000000"^^xsd:integer ;
-    :givenAfter :Whole_Cake_Island_Arc;
-    :givenTo :Monkey_D_Luffy .
-
 :Luffy_Bounty_Arlong_Park a :Bounty;
     rdfs:label "Luffy's Bounty after the conclution of the Arlong Park arc, which also concluded the East Blue Saga"@en ;
     :bountyAmount "30000000"^^xsd:integer ;
@@ -89,19 +82,18 @@
     rdfs:label "East Blue Saga"@en ;
     rdfs:label "イーストブルー編"@ja ;
     rdfs:comment "The East Blue Saga is the first saga in the One Piece series, covering the adventures of the Straw Hat Pirates in the East Blue region." ;
-    :arcStartManga "1" ;
-    :arcEndManga "100" ;
-    :arcStartAnime "1" ;
-    :arcEndAnime "61" .
-
+    :arcStartManga :Chapter_1 ;
+    :arcEndManga :Chapter_100 ;
+    :arcStartAnime :Episode_1 ;
+    :arcEndAnime :Episode_61 .
 :Arlong_Park_Arc a :Arc;
     rdfs:label "Arlong Park Arc"@en ;
     rdfs:label "アーロンパーク編"@ja ;
     rdfs:comment "The Arlong Park Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arlong Pirates." ;
-    :arcStartManga "69" ;
-    :arcEndManga "95" ;
-    :arcStartAnime "31" ;
-    :arcEndAnime "44" .
+    :arcStartManga :Chapter_69 ;
+    :arcEndManga :Chapter_95 ;
+    :arcStartAnime :Episode_31 ;
+    :arcEndAnime :Episode_44 .
 
 :Roronoa_Zoro a :Character, :Pirate ;
     rdfs:label "Roronoa Zoro"@en ;
@@ -126,12 +118,21 @@
     :bountyAmount "60000000"^^xsd:integer ;
     :givenAfter :Arabasta_Arc .
 
+:Arabasta_Saga a :Arc;
+    rdfs:label "Arabasta Saga"@en ;
+    rdfs:label "アラバスタ編"@ja ;
+    rdfs:comment "The Arabasta Saga is a major saga in the One Piece series that focuses on the Straw Hat Pirates' adventures in the desert kingdom of Arabasta." ;
+    :arcStartManga :Chapter_101 ;
+    :arcEndManga :Chapter_217 ;
+    :arcStartAnime :Episode_62 ;
+    :arcEndAnime :Episode_135 ;
+    :containsArc :Reverse_Mountain_Arc, :Whisky_Peak_Arc, :Little_Garden_Arc, :Drum_Island_Arc, :Arabasta_Arc.
 :Arabasta_Arc a :Arc;
     rdfs:label "Arabasta Arc"@en ;
     rdfs:label "アラバスタ編"@ja ;
     rdfs:comment "The Arabasta Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arabasta Pirates." ;
     :arcStartManga "155" ;
-    :arcEndManga "175" ;
+    :arcEndManga "217" ;
     :arcStartAnime "92" ;
     :arcEndAnime "130" .
 
@@ -201,9 +202,11 @@
     rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal." .
 
 :Pirate_Captain a :Occupation ;
-    rdfs:label "Pirate Captain"@en ;.
+    rdfs:label "Pirate Captain"@en ;
+    rdfs:label "海賊船長"@ja .
 :Emperor a :Occupation ;
-    rdfs:label "Emperor"@en ;.
+    rdfs:label "Emperor"@en ;
+    rdfs:label "四皇"@ja .
 
 :Senior_Captain_of_the_Grand_Fleet a :Occupation ;
     rdfs:label "Senior Captain of the Grand Fleet"@en ;.
@@ -238,8 +241,71 @@
 
 :Iñaki_Godoy a schema:Person ;
     rdfs:label "Iñaki Godoy"@en ;
-    rdfs:comment "Iñaki Godoy is a Mexican actor known for portraying Monkey D. Luffy in the live-action adaptation of One Piece." .
+    rdfs:comment "Iñaki Godoy is a Mexican actor known for portraying Monkey D. Luffy in the live-action adaptation of One Piece."@en .
 
 :Colton_Osario a schema:Person ;
     rdfs:label "Colton Osario"@en ;
-    rdfs:comment "Colton Osario is an actor known for portraying Monkey D. Luffy as a child in the live-action adaptation of One Piece." .
+    rdfs:comment "Colton Osario is an actor known for portraying Monkey D. Luffy as a child in the live-action adaptation of One Piece."@en .
+
+:Mt_Colubo a :Location ;
+    rdfs:label "Mt. Colubo"@en ;
+    rdfs:label "コルボ山"@ja ;
+    rdfs:comment "Mt. Colubo is a mountain located near Foosha Village in the East Blue, where Monkey D. Luffy trained under Red-Haired Shanks." ;
+    :locatedIn :Dawn_Island .
+
+:Dawn_Island a :Island ;
+    rdfs:label "Dawn Island"@en ;
+    rdfs:label "夜明けの島"@ja ;
+    rdfs:comment "Dawn Island is an island in the East Blue, known as the location of Foosha Village where Monkey D. Luffy grew up."@en .
+
+:Goa_Kingdom a :Country ;
+    rdfs:label "Goa Kingdom"@en ;
+    rdfs:label "ゴア王国"@ja ;
+    rdfs:comment "The Goa Kingdom is a country located in the East Blue, known as the birthplace of Monkey D. Luffy."@en .
+
+:Luffy_Bounty_Arabasta a :Bounty;
+    rdfs:label "Luffy's Bounty after Arabasta Arc"@en ;
+    :bountyAmount "100000000"^^xsd:integer ;
+    :givenAfter :Arabasta_Arc ;
+    :givenTo :Monkey_D_Luffy .
+
+:Luffy_Bounty_Enies_Lobby a :Bounty;
+    rdfs:label "Luffy's Bounty after Enies Lobby Arc"@en ;
+    :bountyAmount "300000000"^^xsd:integer ;
+    :givenAfter :Enies_Lobby_Arc ;
+    :givenTo :Monkey_D_Luffy .
+
+:Luffy_Bounty_Summit_War a :Bounty;
+    rdfs:label "Luffy's Bounty after Summit War Arc"@en ;
+    :bountyAmount "400000000"^^xsd:integer ;
+    :givenAfter :Summit_War_Arc ;
+    :givenTo :Monkey_D_Luffy .
+
+:Luffy_Bounty_Dressrosa a :Bounty;
+    rdfs:label "Luffy's Bounty after Dressrosa Arc"@en ;
+    :bountyAmount "500000000"^^xsd:integer ;
+    :givenAfter :Dressrosa_Arc ;
+    :givenTo :Monkey_D_Luffy .
+
+:Luffy_Bounty_Wano a :Bounty;
+    rdfs:label "Luffy's Bounty after Wano Arc"@en ;
+    :bountyAmount "3000000000"^^xsd:integer ;
+    :givenAfter :Wano_Arc ;
+    :givenTo :Monkey_D_Luffy .
+:Luffy_Bounty_Whole_Cake a :Bounty;
+    rdfs:label "Luffy's Bounty after Whole Cake Island Arc"@en ;
+    :bountyAmount "1500000000"^^xsd:integer ;
+    :givenAfter :Whole_Cake_Island_Arc;
+    :givenTo :Monkey_D_Luffy .
+
+:Rusukaina a :Island ;
+    rdfs:label "Rusukaina"@en ;
+    rdfs:label "ルスカイナ"@ja ;
+    rdfs:comment "Rusukaina is an island in the Calm Belt where Monkey D. Luffy trained with Silvers Rayleigh for two years after the Summit war events." ;
+    :locatedIn :Calm_Belt .
+
+:Calm_Belt a :Region ;
+    rdfs:label "Calm Belt"@en ;
+    rdfs:label "凪の帯"@ja ;
+    rdfs:comment "The Calm Belt is a region in the One Piece world that borders the Grand Line, known for its lack of wind and sea currents, making it difficult for ships to navigate." .
+
