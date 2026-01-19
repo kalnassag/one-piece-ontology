@@ -11,8 +11,17 @@
     rdfs:label "麦わらの一味"@ja ;
     rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece." ;
     schema:founder :Monkey_D_Luffy ;
+    :hasCrewMember :Monkey_D_Luffy ;
     :hasCrewMember :Roronoa_Zoro ;
-    :hasCrewMember :Monkey_D_Luffy ;.
+    :hasCrewMember :Nami ;
+    :hasCrewMember :Usopp ;
+    :hasCrewMember :Sanji ;
+    :hasCrewMember :Tony_Tony_Chopper ;
+    :hasCrewMember :Nico_Robin ;
+    :hasCrewMember :Franky ;
+    :hasCrewMember :Brook ;
+    :hasCrewMember :Jinbe;
+    .
 
 
 :Monkey_D_Luffy a :Character , :Pirate ;
@@ -57,6 +66,68 @@
     :hasdevilFruit :Gomu_Gomu_no_Mi ;
     .
 
+:Roronoa_Zoro a :Character, :Pirate ;
+    rdfs:label "Roronoa Zoro"@en ;
+    rdfs:label "ロロノア・ゾロ"@ja ;
+    skos:altLabel "Zoro"@en ;
+    skos:altLabel "ゾロ"@ja ;
+    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
+    :mangaDebut :Chapter_3;
+    :animeDebut :Episode_1;
+    :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Shimotsuki_Family, :Ninja_Pirate_Mink_Samurai_Alliance;
+    :occupation :Master_Swordsman, :Pirate, :CrewCombatant, :Senior_Officer, :Ronin, :Bounty_Hunter ;     
+    :placeOfOrigin :East_Blue ;
+    :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
+    :epithet "Pirate Hunter Zoro"@en , "海賊狩りのゾロ"@ja ;
+    
+    :statusOfCharacter :Alive ;
+    foaf:dateOfBirth "11-11"^^xsd:gMonthDay ; 
+    :height 181 ;
+    :hasBloodType :BloodType_XF;
+    :residence :Shimotsuki_Village, :Nazawaka_City, :Kuraigana_Island ;
+    :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
+    
+    ### Bounties
+    :hasBounty :Zoro_Bounty_Arabasta;
+    :hasBounty :Zoro_Bounty_Enies_Lobby;
+    :hasBounty :Zoro_Bounty_Dressrosa;
+    :hasBounty :Zoro_Bounty_Wano;
+    
+    ### Portrayals
+    :japaneseVoiceActor :Kazuya_Nakami, :Megumi_Urawa, :Wataru_Takagi;
+    :englishVoiceActor :Brian_Zimmerman, :Marc_Diraison, :Andrew_Rannells, :Christopher_R_Sabat, :Brina_Palencia, :Cynthia_Cranz, :Aaron_Dismuke;
+    :liveActionPortrayedBy :Mackenyu, :Maxmillian_Lee_Piazza.
+
+:Nami a :Character, :Pirate ;
+    rdfs:label "Nami"@en, "ナミ"@ja ;
+    rdfs:comment "Nami is the navigator of the Straw Hat Pirates in the One Piece series. She is known for her intelligence and cartography skills."@en;
+    rdfs:comment "ナミはワンピースシリーズに登場する麦わらの一味の航海士であり、知性と地図製作のスキルで知られています。"@ja ;
+    :mangaDebut :Chapter_8;
+    :animeDebut :Episode_1;
+    :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Arlong_Pirates, :Ganzack_Pirates, :Golden_Lion_Pirates, :Ninja_Pirate_Mink_Samurai_Alliance;
+    :occupation :Navigator, :Thief, :Senior_Officer, :Pirate_Officer , :Kunoichi;
+
+    :statusOfCharacter :Alive ;
+    :placeOfOrigin :Conomi_Islands ;
+    :temporaryAlias "Namizo"@en, "ナミ蔵"@ja ;
+    :temporaryAlias "O-Nami"@en, "おナミ"@ja ;
+    :epithet "Cat Burglar Nami"@en , "泥棒猫ナミ"@ja ;
+    foaf:dateOfBirth "03-07"^^xsd:gMonthDay ;
+    :height 170 ;
+    :hasBloodType :BloodType_X;
+    :residence :Oykot_Kingdom, :Cocoyasi_Village, :Weatheria;
+
+    ### Bounties
+    :hasBounty :Nami_Bounty_Enies_Lobby;
+    :hasBounty :Nami_Bounty_Dressrosa;
+    :hasBounty :Nami_Bounty_Wano;
+
+    ### Portrayals
+    :japaneseVoiceActor :Akemi_Okamura, :Wakana_Yamazaki, :Megumi_Toyoguchi;
+    :englishVoiceActor :Alison_Lestor, :Chio_Su-Ping, :Cindy_Creekmore, :Kerry_Williams, :Luci_Christian;
+    :liveActionPortrayedBy :Emily_Rudd, :Lily_Fisher, :Sophie_Ellenbogen
+    .
+
 :Foosha_Village a :Location ;
     rdfs:label "Foosha Village"@en ;
     rdfs:label "フーシャ村"@ja ;
@@ -95,28 +166,25 @@
     :arcStartAnime :Episode_31 ;
     :arcEndAnime :Episode_44 .
 
-:Roronoa_Zoro a :Character, :Pirate ;
-    rdfs:label "Roronoa Zoro"@en ;
-    rdfs:label "ロロノア・ゾロ"@ja ;
-    skos:altLabel "Zoro"@en ;
-    skos:altLabel "ゾロ"@ja ;
-    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
-    :statusOfCharacter :Alive ;
-    :affilatesWith :Straw_Hat_Pirates ;
-    :epithet "Pirate Hunter Zoro"@en ;
-    :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
-    :hasBounty :Zoro_Bounty_Whole_Cake;
-    :hasBounty :Zoro_Bounty_Arabasta.
-
-:Zoro_Bounty_Whole_Cake a :Bounty;
-    rdfs:label "Zoro's Bounty after Whole Cake Island Arc"@en ;
-    :bountyAmount "1500000000"^^xsd:integer ;
-    :givenAfter :Whole_Cake_Island_Arc .
-
 :Zoro_Bounty_Arabasta a :Bounty;
-    rdfs:label "Zoro's Bounty after Arabasta Arc"@en ;
+    rdfs:label "Zoro's Bounty after Arabasta Arc"@en, "アラバスタ編後のゾロの懸賞金"@ja ;
     :bountyAmount "60000000"^^xsd:integer ;
     :givenAfter :Arabasta_Arc .
+
+:Zoro_Bounty_Enies_Lobby a :Bounty;
+    rdfs:label "Zoro's Bounty after Enies Lobby Arc"@en, "エニエス・ロビー編後のゾロの懸賞金"@ja ;
+    :bountyAmount "120000000"^^xsd:integer ;
+    :givenAfter :Enies_Lobby_Arc .
+
+:Zoro_Bounty_Dressrosa a :Bounty;
+    rdfs:label "Zoro's Bounty after Dressrosa Arc"@en, "ドレスローザ編後のゾロの懸賞金"@ja ;
+    :bountyAmount "320000000"^^xsd:integer ;
+    :givenAfter :Dressrosa_Arc .
+
+:Zoro_Bounty_Wano a :Bounty;
+    rdfs:label "Zoro's Bounty after Wano Arc"@en, "ワノ国編後のゾロの懸賞金"@ja ;
+    :bountyAmount "1111000000"^^xsd:integer ;
+    :givenAfter :Wano_Arc .
 
 :Arabasta_Saga a :Arc;
     rdfs:label "Arabasta Saga"@en ;
