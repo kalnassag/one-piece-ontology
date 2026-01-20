@@ -1,12 +1,11 @@
 @prefix : <http://kalnassag.com/onepiece#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-:Straw_Hat_Pirates rdf:type schema:Organization ;
+:Straw_Hat_Pirates rdf:type :PirateCrew ;
     rdfs:label "Straw Hat Pirates"@en ;
     rdfs:label "麦わらの一味"@ja ;
     rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece." ;
@@ -28,7 +27,7 @@
     rdfs:label "Monkey D. Luffy"@en ;
     rdfs:label "モンキー・D・ルフィ"@ja ;
     :romanizedName "Monkī Dī Rufi"@en ;
-    rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece." ;
+    rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece."@en ;
     :mangaDebut :Chapter_1;
     :animeDebut :Episode_1;
     :affilatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
@@ -41,9 +40,11 @@
     :alias "Joy Boy"@en, "ジョイボーイ"@ja;
     :alias "Captain Crackhead"@en ;
     :epithet "Straw Hat Luffy"@en, "麦わらのルフィ"@ja;
+    :inCrew :Straw_Hat_Pirates;
 
     :statusOfCharacter :Alive ;
-    foaf:dateOfBirth "05-05"^^xsd:gMonthDay ; 
+    :race :Human ;
+    schema:birthDate "05-05"^^xsd:gMonthDay ;
     :height 172 ;
     :hasBloodType :BloodType_F ;
     :race :Human;
@@ -71,7 +72,7 @@
     rdfs:label "ロロノア・ゾロ"@ja ;
     skos:altLabel "Zoro"@en ;
     skos:altLabel "ゾロ"@ja ;
-    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship." ;
+    rdfs:comment "Roronoa Zoro is a character from the One Piece series. He is the first mate of the Straw Hat Pirates and is known for his swordsmanship."@en ;
     :mangaDebut :Chapter_3;
     :animeDebut :Episode_1;
     :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Shimotsuki_Family, :Ninja_Pirate_Mink_Samurai_Alliance;
@@ -79,10 +80,12 @@
     :placeOfOrigin :East_Blue ;
     :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
     :epithet "Pirate Hunter Zoro"@en , "海賊狩りのゾロ"@ja ;
-    
+    :inCrew :Straw_Hat_Pirates;
+
     :statusOfCharacter :Alive ;
-    foaf:dateOfBirth "11-11"^^xsd:gMonthDay ; 
-    :height 181 ;
+    :race :Human;
+    schema:birthDate "11-11"^^xsd:gDayMonth ;
+    :height "181"^^xsd:integer ;
     :hasBloodType :BloodType_XF;
     :residence :Shimotsuki_Village, :Nazawaka_City, :Kuraigana_Island ;
     :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
@@ -108,12 +111,15 @@
     :occupation :Navigator, :Thief, :Senior_Officer, :Pirate_Officer , :Kunoichi;
 
     :statusOfCharacter :Alive ;
+    :race :Human ;
     :placeOfOrigin :Conomi_Islands ;
     :temporaryAlias "Namizo"@en, "ナミ蔵"@ja ;
     :temporaryAlias "O-Nami"@en, "おナミ"@ja ;
     :epithet "Cat Burglar Nami"@en , "泥棒猫ナミ"@ja ;
-    foaf:dateOfBirth "03-07"^^xsd:gMonthDay ;
-    :height 170 ;
+    :inCrew :Straw_Hat_Pirates;
+    
+    schema:birthDate "03-07"^^xsd:gDayMonth ;
+    :height "170"^^xsd:integer ;
     :hasBloodType :BloodType_X;
     :residence :Oykot_Kingdom, :Cocoyasi_Village, :Weatheria;
 
@@ -128,6 +134,533 @@
     :liveActionPortrayedBy :Emily_Rudd, :Lily_Fisher, :Sophie_Ellenbogen
     .
 
+:Usopp a :Character, :Pirate;
+    rdfs:label "Usopp"@en, "ウソップ"@ja ;
+    rdfs:comment "Usopp is the sniper of the Straw Hat Pirates in the One Piece series. He is known for his marksmanship and storytelling abilities."@en ;
+    rdfs:comment "ウソップはワンピースシリーズに登場する麦わらの一味の狙撃手であり、射撃技術と物語能力で知られています。"@ja ;
+    :mangaDebut :Chapter_23;
+    :animeDebut :Episode_8;
+    :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Usopp_Pirates, :Ninja_Pirate_Mink_Samurai_Alliance;
+    :occupation :Sniper, :Senior_Officer, :Toad_Oil_Salesman ;
+    :statusOfCharacter :Alive;
+    :race :Human;
+    :placeOfOrigin :Syrup_Village;
+    :temporaryAlias "Sogeking"@en, "そげキング"@ja ;
+    :temporaryAlias "Hana Arashi"@en, "花嵐"@ja ;
+    :temporaryAlias "Usoland"@en, "ウソランド"@ja ;
+    :temporaryAlias "Uso-hachi"@en, "ウソ八"@ja ;
+    :epithet "King of Snipers"@en, "Sniper King"@en, "狙撃の王様"@ja ;
+    :epithet "God Usopp"@en, "神ウソップ"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+
+    schema:birthDate "01-04"^^xsd:gDayMonth ;
+    :height "176"^^xsd:integer ;
+    :hasBloodType :BloodType_S;
+    :residence :Syrup_Village, :Boin_Archipelago;
+    
+    ### Bounties
+    :hasBounty :Usopp_Bounty_Enies_Lobby;
+    :hasBounty :Usopp_Bounty_Dressrosa;
+    :hasBounty :Usopp_Bounty_Wano;
+
+    ### Portrayals
+    :japaneseVoiceActor :Kappei_Yamaguchi;
+    :englishVoiceActor :Chuck_Powers, :Jamie_Meldrum, :Sonny_Strait, :Jason_Griffith;
+    :liveActionPortrayedBy :Jacob_Romero_Gibson, :Kevin_Saula.
+
+:Usopp_Bounty_Enies_Lobby a :Bounty;
+    rdfs:label "Usopp's Bounty after Enies Lobby Arc"@en ;
+    :bountyAmount "30000000"^^xsd:integer ;
+    :givenAfter :Enies_Lobby_Arc .
+
+:Usopp_Bounty_Dressrosa a :Bounty;
+    rdfs:label "Usopp's Bounty after Dressrosa Arc"@en ;
+    :bountyAmount "200000000"^^xsd:integer ;
+    :givenAfter :Dressrosa_Arc .
+:Usopp_Bounty_Wano a :Bounty;
+    rdfs:label "Usopp's Bounty after Wano Arc"@en ;
+    :bountyAmount "500000000"^^xsd:integer ;
+    :givenAfter :Wano_Arc .
+
+:Sanji a :Character , :Pirate ;
+    rdfs:label "Sanji"@en ;
+    rdfs:label "サンジ"@ja ;
+    :romanizedName "Sanji"@en ;
+    rdfs:comment "Sanji is the cook of the Straw Hat Pirates and one of the Senior Officers. Known for his powerful kicks and chivalrous behavior, he was born as Vinsmoke Sanji, the third son of the Vinsmoke Family."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_43 ;
+    :animeDebut :Episode_20 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Vinsmoke_Family, 
+                    :Baratie, :Germa_Kingdom, :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Cook, :Senior_Officer, :Sous_Chef, :Prince, :Cart_Vendor ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :North_Blue ;
+    :residence :East_Blue, :Baratie, :Germa_Kingdom, :Momoiro_Island ;
+    
+    ### Temporary Aliases (situational/arc-specific)
+    :temporaryAlias "Mr. Prince"@en, "Mr. プリンス"@ja ;
+    :temporaryAlias "San-gorou"@en, "サン五郎"@ja ;
+    :temporaryAlias "Osoba-mask"@en, "おそばマスク"@ja ;
+    :temporaryAlias "Soba Mask"@en ;
+    
+    ### Permanent Alias (Birth Name)
+    :alias "Vinsmoke Sanji"@en, "ヴィンスモーク・サンジ"@ja ;
+    
+    ### Epithet
+    :epithet "Black Leg"@en, "黒足"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+
+    ### Personal Details
+    :race :Human ;
+    schema:birthDate "03-02"^^xsd:gMonthDay ;
+    :height "180"^^xsd:integer ;
+    :hasBloodType :BloodType_S_RH_Negative ;
+    
+    ### Bounties
+    :hasBounty :Sanji_Bounty_Enies_Lobby ;
+    :hasBounty :Sanji_Bounty_Dressrosa ;
+    :hasBounty :Sanji_Bounty_Whole_Cake ;
+    :hasBounty :Sanji_Bounty_Wano ;
+    
+    ### Voice Actors - Japanese
+    :japaneseVoiceActor :Hiroaki_Hirata, :Ikue_Otani ;
+    
+    ### Voice Actors - English (multiple dub versions)
+    :englishVoiceActor :Joseph_Murray, :Paul_Pistore, :David_Moo, 
+                       :Veronica_Taylor, :Eric_Vale, :Christine_Auten, :Megan_Shipman ;
+    
+    ### Live Action Portrayal
+    :liveActionPortrayedBy :Taz_Skylar, :Christian_Convery ;
+    .
+
+:Sanji_Bounty_Enies_Lobby a :Bounty ;
+    :bountyAmount "77000000"^^xsd:integer ;
+    :givenTo :Sanji ;
+    :givenAfter :Enies_Lobby_Arc ;
+    .
+
+:Sanji_Bounty_Dressrosa a :Bounty ;
+    :bountyAmount "177000000"^^xsd:integer ;
+    :givenTo :Sanji ;
+    :givenAfter :Dressrosa_Arc ;
+    rdfs:comment "Only Alive bounty condition"@en ;
+    .
+
+:Sanji_Bounty_Whole_Cake a :Bounty ;
+    :bountyAmount "330000000"^^xsd:integer ;
+    :givenTo :Sanji ;
+    :givenAfter :Whole_Cake_Island_Arc ;
+    .
+
+:Sanji_Bounty_Wano a :Bounty ;
+    :bountyAmount "1032000000"^^xsd:integer ;
+    :givenTo :Sanji ;
+    :givenAfter :Wano_Country_Arc ;
+    .
+
+:Tony_Tony_Chopper a :Character , :Pirate ;
+    rdfs:label "Tony Tony Chopper"@en ;
+    rdfs:label "トニートニー・チョッパー"@ja ;
+    :romanizedName "Tonī Tonī Choppā"@en ;
+    rdfs:comment "Tony Tony Chopper is the doctor of the Straw Hat Pirates. He is a reindeer who ate the Hito Hito no Mi, granting him the ability to transform into human-reindeer hybrid forms and understand human speech."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_134 ;
+    :animeDebut :Episode_81 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Foxy_Pirates,
+                    :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Doctor, :Senior_Officer ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :Drum_Island ;
+    :residence :Sakura_Kingdom, :Torino_Kingdom ;
+    
+    ### Temporary Alias
+    :temporaryAlias "Chopa-emon"@en, "チョッパえもん"@ja ;
+    :temporaryAlias "Chopperemon"@en ;
+    
+    ### Epithet
+    :epithet "Cotton Candy Lover"@en, "わたあめ大好き"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+
+    ### Personal Details
+    :race :Reindeer ;
+    schema:birthDate "12-24"^^xsd:gMonthDay ;
+    :height "90"^^xsd:integer ;
+    :hasBloodType :BloodType_X ;
+    
+    ### Bounties
+    :hasBounty :Chopper_Bounty_Enies_Lobby ;
+    :hasBounty :Chopper_Bounty_Dressrosa ;
+    :hasBounty :Chopper_Bounty_Wano ;
+    
+    ### Voice Actors - Japanese
+    :japaneseVoiceActor :Ikue_Otani, :Kazue_Ikura ;
+    
+    ### Voice Actors - English (multiple dub versions)
+    :englishVoiceActor :Emlyn_Morinelli, :Lisa_Ortiz, :Brian_Maillard, :Brina_Palencia ;
+    
+    ### Live Action Portrayal
+    :liveActionPortrayedBy :Mikaela_Hoover ;
+    
+    ### Devil Fruit
+    :hasDevilFruit :Hito_Hito_no_Mi ;
+    .
+
+### Bounty Entities
+:Chopper_Bounty_Enies_Lobby a :Bounty ;
+    :bountyAmount "50"^^xsd:integer ;
+    :givenTo :Tony_Tony_Chopper ;
+    :givenAfter :Enies_Lobby_Arc ;
+    rdfs:comment "Marines mistook Chopper for a pet"@en ;
+    .
+
+:Chopper_Bounty_Dressrosa a :Bounty ;
+    :bountyAmount "100"^^xsd:integer ;
+    :givenTo :Tony_Tony_Chopper ;
+    :givenAfter :Dressrosa_Arc ;
+    rdfs:comment "Still mistaken for a pet"@en ;
+    .
+
+:Chopper_Bounty_Wano a :Bounty ;
+    :bountyAmount "1000"^^xsd:integer ;
+    :givenTo :Tony_Tony_Chopper ;
+    :givenAfter :Wano_Country_Arc ;
+    rdfs:comment "Still considered a pet by the World Government"@en ;
+    .
+
+:Nico_Robin a :Character , :Pirate ;
+    rdfs:label "Nico Robin"@en ;
+    rdfs:label "ニコ・ロビン"@ja ;
+    :romanizedName "Niko Robin"@en ;
+    rdfs:comment "Nico Robin is the archaeologist of the Straw Hat Pirates. She is the sole survivor of Ohara and one of the few people in the world who can read Poneglyphs, making her a key figure in uncovering the world's hidden history."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_114 ;
+    :animeDebut :Episode_67 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Baroque_Works,
+                    :Foxy_Pirates, :Ohara_Archaeologists, :Revolutionary_Army,
+                    :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Archaeologist, :Senior_Officer, :Geisha, :Assassin, 
+                :Baroque_Works_Vice_President, :Rain_Dinners_Manager, 
+                :Revolutionary, :Slave ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :West_Blue ;
+    :residence :Ohara, :Arabasta, :Baltigo ;
+    
+    ### Temporary Aliases
+    :temporaryAlias "Miss All Sunday"@en, "ミス・オールサンデー"@ja ;
+    :temporaryAlias "Ms. Sunday"@en ;
+    :temporaryAlias "O-Robi"@en, "おロビ"@ja ;
+    :temporaryAlias "Orobi"@en ;
+    
+    ### Epithets
+    :epithet "Devil Child"@en, "悪魔の子"@ja ;
+    :epithet "Demon Child"@en ;
+    :epithet "Light of the Revolution"@en, "革命の灯"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+    
+    ### Personal Details
+    :race :Human ;
+    schema:birthDate "02-06"^^xsd:gMonthDay ;
+    :height "188"^^xsd:integer ;
+    :hasBloodType :BloodType_S ;
+    
+    ### Bounties
+    :hasBounty :Robin_Bounty_Ohara ;
+    :hasBounty :Robin_Bounty_Enies_Lobby ;
+    :hasBounty :Robin_Bounty_Dressrosa ;
+    :hasBounty :Robin_Bounty_Wano ;
+    
+    ### Voice Actors - Japanese
+    :japaneseVoiceActor :Yuriko_Yamaguchi, :Yuko_Kobayashi, :Anzu_Nagai, :Aya_Yamane ;
+    
+    ### Voice Actors - English (multiple dub versions)
+    :englishVoiceActor :Natasha_Malinsky, :Veronica_Taylor, :Stephanie_Young, :Jad_Saxton ;
+    
+    ### Live Action Portrayal
+    :liveActionPortrayedBy :Lera_Abova ;
+    .
+
+### Bounty Entities
+:Robin_Bounty_Ohara a :Bounty ;
+    :bountyAmount "79000000"^^xsd:integer ;
+    :givenTo :Nico_Robin ;
+    rdfs:comment "Issued as a child after Ohara's destruction"@en ;
+    .
+
+:Robin_Bounty_Enies_Lobby a :Bounty ;
+    :bountyAmount "80000000"^^xsd:integer ;
+    :givenTo :Nico_Robin ;
+    :givenAfter :Enies_Lobby_Arc ;
+    .
+
+:Robin_Bounty_Dressrosa a :Bounty ;
+    :bountyAmount "130000000"^^xsd:integer ;
+    :givenTo :Nico_Robin ;
+    :givenAfter :Dressrosa_Arc ;
+    .
+
+:Robin_Bounty_Wano a :Bounty ;
+    :bountyAmount "930000000"^^xsd:integer ;
+    :givenTo :Nico_Robin ;
+    :givenAfter :Wano_Country_Arc ;
+    .
+
+:Franky a :Character , :Pirate ;
+    rdfs:label "Franky"@en ;
+    rdfs:label "フランキー"@ja ;
+    :romanizedName "Furankī"@en ;
+    rdfs:comment "Franky is the shipwright of the Straw Hat Pirates. Born as Cutty Flam, he transformed himself into a cyborg after a near-fatal accident and later built the Thousand Sunny for the Straw Hats."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_329 ;
+    :animeDebut :Episode_233 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Franky_Family,
+                    :Toms_Workers, :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Shipwright, :Senior_Officer, :Dismantler, :Underworld_Boss, :Bounty_Hunter ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :South_Blue ;
+    :residence :Water_7, :Karakuri_Island ;
+    
+    ### Temporary Alias
+    :temporaryAlias "Fra-nosuke"@en, "フラの介"@ja ;
+    :temporaryAlias "Franosuke"@en ;
+    
+    ### Permanent Alias (Birth Name)
+    :alias "Cutty Flam"@en, "カティ・フラム"@ja ;
+    
+    ### Epithets
+    :epithet "Iron Man"@en, "鉄人"@ja ;
+    :epithet "Cyborg"@en, "サイボーグ"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+
+    ### Personal Details
+    :race :Human ;
+    schema:birthDate "03-09"^^xsd:gMonthDay ;
+    :height "240"^^xsd:integer ;
+    :hasBloodType :BloodType_XF ;
+    
+    ### Bounties
+    :hasBounty :Franky_Bounty_Enies_Lobby ;
+    :hasBounty :Franky_Bounty_Dressrosa ;
+    :hasBounty :Franky_Bounty_Wano ;
+    
+    ### Voice Actors - Japanese
+    :japaneseVoiceActor :Kazuki_Yao, :Subaru_Kimura, :Junko_Noda ;
+    
+    ### Voice Actors - English
+    :englishVoiceActor :Patrick_Seitz, :Terri_Doty, :Greg_Ayres ;
+    .
+
+### Bounty Entities
+:Franky_Bounty_Enies_Lobby a :Bounty ;
+    :bountyAmount "44000000"^^xsd:integer ;
+    :givenTo :Franky ;
+    :givenAfter :Enies_Lobby_Arc ;
+    .
+
+:Franky_Bounty_Dressrosa a :Bounty ;
+    :bountyAmount "94000000"^^xsd:integer ;
+    :givenTo :Franky ;
+    :givenAfter :Dressrosa_Arc ;
+    .
+
+:Franky_Bounty_Wano a :Bounty ;
+    :bountyAmount "394000000"^^xsd:integer ;
+    :givenTo :Franky ;
+    :givenAfter :Wano_Country_Arc ;
+    .
+
+:Brook a :Character , :Pirate ;
+    rdfs:label "Brook"@en ;
+    rdfs:label "ブルック"@ja ;
+    :romanizedName "Burukku"@en ;
+    rdfs:comment "Brook is the musician of the Straw Hat Pirates. After eating the Yomi Yomi no Mi and dying, his soul returned to his body, leaving him as a living skeleton. He was formerly a member of the Rumbar Pirates and later became the famous 'Soul King'."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_442 ;
+    :animeDebut :Episode_337 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Rumbar_Pirates,
+                    :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Musician, :Swordsman, :Senior_Officer, :Pirate_Captain, 
+                :Battle_Convoy_Leader, :World_Famous_Rock_Star ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :West_Blue ;
+    :residence :Florian_Triangle, :Namakura_Island ;
+    
+    ### Temporary Aliases
+    :temporaryAlias "Demon King Satan-sama"@en, "悪魔王サタン様"@ja ;
+    :temporaryAlias "Great Demon Lord"@en ;
+    :temporaryAlias "Lord Satan"@en ;
+    :temporaryAlias "Hone-kichi"@en, "ホネ吉"@ja ;
+    :temporaryAlias "Bonekichi"@en ;
+    :temporaryAlias "The Starving Skeleton"@en, "がしゃどくろ"@ja ;
+
+    ### Epithets
+    :epithet "Humming Brook"@en, "鼻歌のブルック"@ja ;
+    :epithet "Soul King"@en, "ソウルキング"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+
+    ### Personal Details
+    :race :Human ;
+    schema:birthDate "04-03"^^xsd:gMonthDay ;
+    :ageAtDeath "38"^^xsd:integer ;
+    :height "277"^^xsd:integer ;
+    :hasBloodType :BloodType_X ;
+    
+    ### Bounties
+    :hasBounty :Brook_Bounty_Thriller_Bark ;
+    :hasBounty :Brook_Bounty_Dressrosa ;
+    :hasBounty :Brook_Bounty_Wano ;
+    
+    ### Voice Actors
+    :japaneseVoiceActor :Chō ;
+    :englishVoiceActor :Ian_Sinclair ;
+    
+    ### Devil Fruit
+    :hasDevilFruit :Yomi_Yomi_no_Mi ;
+    .
+
+### Bounty Entities
+:Brook_Bounty_Thriller_Bark a :Bounty ;
+    :bountyAmount "33000000"^^xsd:integer ;
+    :givenTo :Brook ;
+    rdfs:comment "Original bounty from Rumbar Pirates days"@en ;
+    .
+
+:Brook_Bounty_Dressrosa a :Bounty ;
+    :bountyAmount "83000000"^^xsd:integer ;
+    :givenTo :Brook ;
+    :givenAfter :Dressrosa_Arc ;
+    .
+
+:Brook_Bounty_Wano a :Bounty ;
+    :bountyAmount "383000000"^^xsd:integer ;
+    :givenTo :Brook ;
+    :givenAfter :Wano_Country_Arc ;
+    .
+
+:Jinbe a :Character , :Pirate ;
+    rdfs:label "Jinbe"@en ;
+    rdfs:label "ジンベエ"@ja ;
+    :romanizedName "Jinbē"@en ;
+    rdfs:comment "Jinbe is the helmsman of the Straw Hat Pirates. A whale shark fish-man and former Warlord of the Sea, he was captain of the Sun Pirates before joining the Straw Hats. He is a master of Fish-Man Karate and a powerful ally."@en ;
+    
+    ### Debuts
+    :mangaDebut :Chapter_528 ;
+    :animeDebut :Episode_430 ;
+    
+    ### Affiliations
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Sun_Pirates,
+                    :Big_Mom_Pirates, :Seven_Warlords_of_the_Sea, :Ryugu_Kingdom,
+                    :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance ;
+    
+    ### Occupations
+    :occupation :Pirate, :Helmsman, :Senior_Officer, :Pirate_Captain, 
+                :Warlord_of_the_Sea, :Soldier, :Prisoner_of_the_Great_Prison ;
+    
+    ### Status
+    :statusOfCharacter :Alive ;
+    
+    ### Origins and Residence
+    :placeOfOrigin :Fish_Man_Island ;
+    :residence :Fish_Man_District ;
+    
+    ### Epithets
+    :epithet "Knight of the Sea"@en, "海侠のジンベエ"@ja ;
+    :epithet "First Son of the Sea"@en ;
+    :epithet "Boss Jinbe"@en, "ジンベエ親分"@ja ;
+    :inCrew :Straw_Hat_Pirates;
+    
+    ### Personal Details
+    :race :Fishman ;
+    schema:birthDate "04-02"^^xsd:gMonthDay ;
+    :height "301"^^xsd:integer ;
+    :hasBloodType :BloodType_F ;
+    
+    ### Bounties
+    :hasBounty :Jinbe_Bounty_Sun_Pirates ;
+    :hasBounty :Jinbe_Bounty_Post_Warlord ;
+    :hasBounty :Jinbe_Bounty_Big_Mom_Alliance ;
+    :hasBounty :Jinbe_Bounty_Wano ;
+    
+    ### Voice Actors - Japanese
+    :japaneseVoiceActor :Daisuke_Gōri, :Katsuhisa_Hōki, :Chika_Sakamoto ;
+    
+    ### Voice Actors - English
+    :englishVoiceActor :Daniel_Baugh, :Lexi_Nieto ;
+    .
+
+### Bounty Entities
+:Jinbe_Bounty_Sun_Pirates a :Bounty ;
+    rdfs:label "Jinbe's Bounty Sun Pirates Captain"@en, "サンゴー海賊団船長時代のジンベエの懸賞金"@ja ;
+    :bountyAmount "76000000"^^xsd:integer ;
+    :givenTo :Jinbe ;
+    rdfs:comment "Original bounty as Sun Pirates captain"@en ;
+    .
+
+:Jinbe_Bounty_Post_Warlord a :Bounty ;
+    rdfs:label "Jinbe's Bounty Post Warlord"@en, "七武海脱退後のジンベエの懸賞金"@ja ;
+    :bountyAmount "250000000"^^xsd:integer ;
+    :givenTo :Jinbe ;
+    rdfs:comment "Bounty reinstated after leaving the Seven Warlords"@en ;
+    .
+
+:Jinbe_Bounty_Summit_War a :Bounty ;
+    rdfs:label "Jinbe's Bounty Summit War"@en, "サミット戦争後のジンベエの懸賞金"@ja ;
+    :bountyAmount "438000000"^^xsd:integer ;
+    :givenTo :Jinbe ;
+    rdfs:comment "Bounty after leaving Big Mom Pirates alliance"@en ;
+    .
+
+:Jinbe_Bounty_Wano a :Bounty ;
+    rdfs:label "Jinbe's Bounty Wano Arc"@en, "ワノ国編後のジンベエの懸賞金"@ja ;
+    rdfs:comment "Jinbe's bounty after the conclusion of the Wano Country Arc"@en , "ワノ国編の終了後のジンベエの懸賞金"@ja ;
+    :bountyAmount "1100000000"^^xsd:integer ;
+    :givenTo :Jinbe ;
+    :givenAfter :Wano_Country_Arc ;
+    .
 :Foosha_Village a :Location ;
     rdfs:label "Foosha Village"@en ;
     rdfs:label "フーシャ村"@ja ;
@@ -138,21 +671,22 @@
     rdfs:label "Whole Cake Island Arc"@en ;
     skos:altLabel "Totto Land Arc"@en ;
     rdfs:label "ホールケーキアイランド編"@ja ;
-    rdfs:comment "The Whole Cake Island Arc is a major story arc in the One Piece series that focuses on the Straw Hat Pirates' journey to rescue Sanji from an arranged marriage orchestrated by Big Mom.";
+    rdfs:comment "The Whole Cake Island Arc is a major story arc in the One Piece series that focuses on the Straw Hat Pirates' journey to rescue Sanji from an arranged marriage orchestrated by Big Mom."@en;
     :arcStartManga "825" ;
     :arcEndManga "902" ;
     :arcStartAnime "783" ;
     :arcEndAnime "877".
 
 :Luffy_Bounty_Arlong_Park a :Bounty;
-    rdfs:label "Luffy's Bounty after the conclution of the Arlong Park arc, which also concluded the East Blue Saga"@en ;
+    rdfs:label "Luffy's Bounty after Arlong Park Arc"@en, "アルロングパーク編後のルフィの懸賞金"@ja;
+    rdfs:comment "Luffy's Bounty after the conclution of the Arlong Park arc, which also concluded the East Blue Saga"@en ;
     :bountyAmount "30000000"^^xsd:integer ;
     :givenAfter :Arlong_Park_Arc .
 
 :East_Blue_Saga a :Arc;
     rdfs:label "East Blue Saga"@en ;
     rdfs:label "イーストブルー編"@ja ;
-    rdfs:comment "The East Blue Saga is the first saga in the One Piece series, covering the adventures of the Straw Hat Pirates in the East Blue region." ;
+    rdfs:comment "The East Blue Saga is the first saga in the One Piece series, covering the adventures of the Straw Hat Pirates in the East Blue region."@en ;
     :arcStartManga :Chapter_1 ;
     :arcEndManga :Chapter_100 ;
     :arcStartAnime :Episode_1 ;
@@ -160,7 +694,7 @@
 :Arlong_Park_Arc a :Arc;
     rdfs:label "Arlong Park Arc"@en ;
     rdfs:label "アーロンパーク編"@ja ;
-    rdfs:comment "The Arlong Park Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arlong Pirates." ;
+    rdfs:comment "The Arlong Park Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arlong Pirates."@en ;
     :arcStartManga :Chapter_69 ;
     :arcEndManga :Chapter_95 ;
     :arcStartAnime :Episode_31 ;
@@ -189,7 +723,7 @@
 :Arabasta_Saga a :Arc;
     rdfs:label "Arabasta Saga"@en ;
     rdfs:label "アラバスタ編"@ja ;
-    rdfs:comment "The Arabasta Saga is a major saga in the One Piece series that focuses on the Straw Hat Pirates' adventures in the desert kingdom of Arabasta." ;
+    rdfs:comment "The Arabasta Saga is a major saga in the One Piece series that focuses on the Straw Hat Pirates' adventures in the desert kingdom of Arabasta."@en ;
     :arcStartManga :Chapter_101 ;
     :arcEndManga :Chapter_217 ;
     :arcStartAnime :Episode_62 ;
@@ -198,7 +732,7 @@
 :Arabasta_Arc a :Arc;
     rdfs:label "Arabasta Arc"@en ;
     rdfs:label "アラバスタ編"@ja ;
-    rdfs:comment "The Arabasta Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Arabasta Pirates." ;
+    rdfs:comment "The Arabasta Arc is a story arc in the One Piece series that focuses on the Straw Hat Pirates' battle against the Baroque Works organisation led by Crocodile."@en ;
     :arcStartManga "155" ;
     :arcEndManga "217" ;
     :arcStartAnime "92" ;
@@ -207,7 +741,7 @@
 :Koby a :Character, :Marine;
     rdfs:label "Koby"@en ;
     rdfs:label "コビー"@ja ;
-    rdfs:comment "Koby is a character from the One Piece series. He is a Marine officer who aspires to become an admiral." ;
+    rdfs:comment "Koby is a character from the One Piece series. He is a Marine officer who aspires to become an admiral."@en ;
     :height 180 ;
     :placeOfOrigin :East_Blue ;
     :statusOfCharacter :Alive ;
@@ -217,25 +751,25 @@
 :East_Blue a :Region ;
     rdfs:label "East Blue"@en ;
     rdfs:label "イーストブルー"@ja ;
-    rdfs:comment "East Blue is one of the four seas in the One Piece world, known for being the starting point of many pirates' journeys." .
+    rdfs:comment "East Blue is one of the four seas in the One Piece world, known for being the starting point of many pirates' journeys."@en .
 
 :Human a :Race ;
     rdfs:label "Human"@en ;
     rdfs:label "人間"@ja ;
-    rdfs:comment "Humans are the most common race in the One Piece universe." .
+    rdfs:comment "Humans are the most common race in the One Piece universe."@en .
 
 :Giant a :Race;
     rdfs:label "Giant"@en ;
     rdfs:label "巨人族"@ja ;
-    rdfs:comment "Giants are a race in the One Piece universe known for their enormous size and strength." .
+    rdfs:comment "Giants are a race in the One Piece universe known for their enormous size and strength."@en .
 
 :Gomu_Gomu_no_Mi a :DevilFruit ;
     rdfs:label "Gomu Gomu no Mi"@en ;
     rdfs:label "ゴムゴムの実"@ja ;
-    rdfs:comment "The Gomu Gomu no Mi is a Paramecia-type Devil Fruit that grants the user the ability to stretch their body like rubber." ;
+    rdfs:comment "The Gomu Gomu no Mi is a Paramecia-type Devil Fruit that grants the user the ability to stretch their body like rubber."@en ;
     :hasFruitType :Paramecia ;
-    :DevilFruitDebutManga "1" ;
-    :DevilFruitDebutAnime "1" ;
+    :DevilFruitDebutManga :Chapter_1 ;
+    :DevilFruitDebutAnime :Episode_1 ;
     :DevilFruitCurrentUser :Monkey_D_Luffy ;
     :DevilFruitPreviousUser :Joy_Boy .
 
@@ -254,11 +788,11 @@
 :Marineford a :Island;
     rdfs:label "Marineford"@en;
     rdfs:label "マリンフォード"@ja;
-    rdfs:comment "Marineford was the island of the base of operations for Marine Headquarters, where now the Marine Base G-1 is situated."@en.
+    rdfs:comment "Marineford was the island of the base of operations for Marine Headquarters, where now the Marine Base G-1 is situated."@en .
 :Paramecia a :DevilFruitType ;
     rdfs:label "Paramecia"@en ;
     rdfs:label "パラミシア"@ja ;
-    rdfs:comment "Paramecia is a type of Devil Fruit that grants the user superhuman abilities or traits that affect their body or surroundings." .
+    rdfs:comment "Paramecia is a type of Devil Fruit that grants the user superhuman abilities or traits that affect their body or surroundings."@en .
 
 :Logia a :DevilFruitType ;
     rdfs:label "Logia"@en ;
@@ -267,7 +801,7 @@
 :Zoan a :DevilFruitType ;
     rdfs:label "Zoan"@en ;
     rdfs:label "ゾオン"@ja ;
-    rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal." .
+    rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal."@en .
 
 :Pirate_Captain a :Occupation ;
     rdfs:label "Pirate Captain"@en ;
@@ -289,24 +823,23 @@
 :Mayumi_Tanaka a schema:Person ;
     rdfs:label "Mayumi Tanaka"@en ;
     rdfs:label "田中 真弓"@ja ;
-    rdfs:comment "Mayumi Tanaka is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
+    rdfs:comment "Mayumi Tanaka is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series."@en .
 
 :Urara_Takano a schema:Person ;
     rdfs:label "Urara Takano"@en ; 
     rdfs:label "高乃 麗"@ja ;
-    rdfs:comment "Urara Takano is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series." .
+    rdfs:comment "Urara Takano is a Japanese voice actress known for voicing Monkey D. Luffy in the One Piece anime series."@en .
 
 :Colleen_Clinkenbeard a :Person ;
     rdfs:label "Colleen Clinkenbeard"@en ;
-    rdfs:comment "Colleen Clinkenbeard is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
+    rdfs:comment "Colleen Clinkenbeard is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series."@en .
 :Chuck_Powers a schema:Person ;
     rdfs:label "Chuck Powers"@en ;
-    rdfs:comment "Chuck Powers is an American voice actor known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
+    rdfs:comment "Chuck Powers is an American voice actor known for voicing Monkey D. Luffy in the English dub of the One Piece anime series."@en .
 
 :Bella_Hudson a schema:Person ;
-    rdfs:label "Bella Hudson"@en ;
-    rdfs:comment "Bella Hudson is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series." .
-
+        rdfs:label "Bella Hudson"@en ;
+        rdfs:comment "Bella Hudson is an American voice actress known for voicing Monkey D. Luffy in the English dub of the One Piece anime series."@en .
 :Iñaki_Godoy a schema:Person ;
     rdfs:label "Iñaki Godoy"@en ;
     rdfs:comment "Iñaki Godoy is a Mexican actor known for portraying Monkey D. Luffy in the live-action adaptation of One Piece."@en .
@@ -318,7 +851,7 @@
 :Mt_Colubo a :Location ;
     rdfs:label "Mt. Colubo"@en ;
     rdfs:label "コルボ山"@ja ;
-    rdfs:comment "Mt. Colubo is a mountain located near Foosha Village in the East Blue, where Monkey D. Luffy trained under Red-Haired Shanks." ;
+    rdfs:comment "Mt. Colubo is a mountain located near Foosha Village in the East Blue, where Monkey D. Luffy trained under Red-Haired Shanks."@en ;
     :locatedIn :Dawn_Island .
 
 :Dawn_Island a :Island ;
@@ -369,11 +902,11 @@
 :Rusukaina a :Island ;
     rdfs:label "Rusukaina"@en ;
     rdfs:label "ルスカイナ"@ja ;
-    rdfs:comment "Rusukaina is an island in the Calm Belt where Monkey D. Luffy trained with Silvers Rayleigh for two years after the Summit war events." ;
+    rdfs:comment "Rusukaina is an island in the Calm Belt where Monkey D. Luffy trained with Silvers Rayleigh for two years after the Summit war events."@en ;
     :locatedIn :Calm_Belt .
 
 :Calm_Belt a :Region ;
     rdfs:label "Calm Belt"@en ;
     rdfs:label "凪の帯"@ja ;
-    rdfs:comment "The Calm Belt is a region in the One Piece world that borders the Grand Line, known for its lack of wind and sea currents, making it difficult for ships to navigate." .
+    rdfs:comment "The Calm Belt is a region in the One Piece world that borders the Grand Line, known for its lack of wind and sea currents, making it difficult for ships to navigate."@en .
 
