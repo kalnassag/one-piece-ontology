@@ -30,7 +30,7 @@
     rdfs:comment "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King by finding the legendary treasure known as One Piece."@en ;
     :mangaDebut :Chapter_1;
     :animeDebut :Episode_1;
-    :affilatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
+    :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
     :occupation :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;    
     :placeOfOrigin :Foosha_Village ;
     :residence :Foosha_Village, :Mt_Colubo, :Rusukaina;
@@ -612,7 +612,7 @@
     :epithet "First Son of the Sea"@en ;
     :epithet "Boss Jinbe"@en, "ジンベエ親分"@ja ;
     :inCrew :Straw_Hat_Pirates;
-    
+
     ### Personal Details
     :race :Fishman ;
     schema:birthDate "04-02"^^xsd:gMonthDay ;
