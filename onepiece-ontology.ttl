@@ -37,6 +37,7 @@
     rdfs:domain :Character ;
     rdfs:range xsd:string .
 
+
 :temporaryAlias a owl:DatatypeProperty ;
     rdfs:subPropertyOf :alias ;
     rdfs:label "Temporary Alias"@en, "仮の別名"@ja ;
@@ -140,14 +141,16 @@
     rdfs:comment "A story arc in the One Piece series" ;.
 
 :MangaIssue a owl:Class ;
+    rdfs:subClassOf dbo:ComicIssue ;
     rdfs:label "Manga Issue" ;
     rdfs:comment "A manga issue of the One Piece series" ;.
 
 :AnimeEpisode a owl:Class ;
+    rdfs:subClassOf dbo:Episode ;
     rdfs:label "Anime Episode"@en ;
     rdfs:comment "An anime episode of the One Piece series"@en ;.
 
-:Bounty a owl:Class;
+:Bounty a owl:Class ;
 rdfs:label "Bounty" ;
 rdfs:comment "The bounty on a pirate's head in berries".
 
@@ -196,7 +199,11 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The Wikipedia Open Data identifier for this entity."@en ;
     rdfs:domain owl:Thing ;
     rdfs:range xsd:string .
-
+:opwikiurl a owl:DatatypeProperty ;
+    rdfs:label "One Piece Wiki URL"@en ;
+    rdfs:comment "The One Piece Wiki URL for this entity."@en ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:anyURI .
 ###############################################
 ##### Object Properties                             
 ###############################################
@@ -226,13 +233,13 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:domain :Character ;
     rdfs:range schema:Person .
 
-:animeDebut a owl:ObjectProperty ;
+:animeDebut a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:label "Anime Debut"@en ;
     rdfs:comment "The anime episode in which the character first appeared" ;
     rdfs:domain :Character ;
     rdfs:range :AnimeEpisode .
 
-:mangaDebut a owl:ObjectProperty ;
+:mangaDebut a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:label "Manga Debut"@en ;
     rdfs:comment "The manga issue in which the character first appeared" ;
     rdfs:domain :Character ;
@@ -269,7 +276,7 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:range :Race .
 
 :inCrew a owl:ObjectProperty ;  
-    rdfs:label "Crew"@en ;
+    rdfs:label "In Crew"@en ;
     rdfs:comment "The crew to which this pirate belongs" ;
     owl:inverseOf :hasCrewMember ;
     rdfs:domain :Pirate ;
@@ -372,13 +379,13 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:domain :DevilFruit ;
     rdfs:range :Character .
 
-:devilFruitDebutManga a owl:DatatypeProperty ;
+:devilFruitDebutManga a owl:ObjectProperty ;
     rdfs:label "Devil Fruit Debut"@en ;
     rdfs:comment "The chapter or episode in which the devil fruit first appeared" ;
     rdfs:domain :DevilFruit ;
     rdfs:range :MangaIssue .
 
-:devilFruitDebutAnime a owl:DatatypeProperty ;
+:devilFruitDebutAnime a owl:ObjectProperty ;
     rdfs:label "Devil Fruit Debut Anime"@en ;
     rdfs:comment "The anime episode in which the devil fruit first appeared" ;
     rdfs:domain :DevilFruit ;
