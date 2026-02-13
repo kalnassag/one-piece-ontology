@@ -16,7 +16,7 @@
 :Straw_Hat_Pirates rdf:type :PirateCrew ;
     rdfs:label "Straw Hat Pirates"@en ;
     rdfs:label "麦わらの一味"@ja ;
-    rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece." ;
+    rdfs:comment "The Straw Hat Pirates are a notorious pirate crew led by Monkey D. Luffy, known for their adventures across the Grand Line in search of the One Piece."@en ;
     schema:founder :Monkey_D_Luffy ;
     :hasCrewMember :Monkey_D_Luffy ;
     :hasCrewMember :Roronoa_Zoro ;

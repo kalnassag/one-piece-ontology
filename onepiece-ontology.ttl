@@ -15,7 +15,7 @@
 ###############################################
 ##### Classes and properties                        
 ###############################################
-:Character a owl:Class , schema:Person;
+:Character a owl:Class ;
     rdfs:subClassOf dbo:FictionalCharacter ;
     rdfs:label "One Piece Character"@en ;
     rdfs:label "ワンピースのキャラクター"@ja ;
@@ -60,49 +60,77 @@
     rdfs:comment "The occupation of a character in the One Piece universe. e.g. Pirate Captain, Cook, Pirate Officer, Marine Admiral" .
 
 :Pirate a owl:Class ;
-    rdfs:label "Pirate" ;
+    rdfs:label "Pirate"@en ;
+    rdfs:label "海賊"@ja ;
     rdfs:comment "A pirate character in the One Piece universe." ;
     rdfs:subClassOf :Affiliation .
 
 :Marine a owl:Class ;
-    rdfs:label "Marine" ;
+    rdfs:label "Marine"@en ;
+    rdfs:label "海軍"@ja ;
     rdfs:comment "A Marine/Navy character in the One Piece universe." ;
     rdfs:subClassOf :Affiliation .
+:Knights_of_God a owl:Class ;
+    rdfs:label "Knights of God"@en ;
+    rdfs:label "神の騎士団"@ja ;
+    rdfs:comment "The Knights of God, also known as the Holy Knights, are a group of powerful warriors who serve under the World Government in the One Piece universe." ;
+    rdfs:subClassOf :Affiliation .
+
+:World_Government a owl:Class ;
+    rdfs:label "World Government"@en ;
+    rdfs:label "世界政府"@ja ;
+    rdfs:comment "The World Government is the main governing body in the One Piece universe, overseeing various nations and organizations." ;
+    rdfs:subClassOf :Affiliation .
+
+:Five_Elders a owl:Class ;
+    rdfs:label "Five Elders"@en ;
+    rdfs:label "五老星"@ja ;
+    rdfs:comment "The Five Elders, also known as the Gorosei, are the highest-ranking members of the World Government in the One Piece universe." ;
+    rdfs:subClassOf :Affiliation .
+
 
 :DevilFruit a owl:Class ;
-    rdfs:label "Devil Fruit" ;
+    rdfs:label "Devil Fruit"@en ;
+    rdfs:label "悪魔の実"@ja ;
     rdfs:comment "A devil fruit found in the One Piece universe".
 
 :Status a owl:Class ;
-    rdfs:label "Status" ;
+    rdfs:label "Status"@en ;
+    rdfs:label "状態"@ja ;
     rdfs:comment "The current status of a character (alive, deceased, missing, etc.)" .
 
 :PirateCrew a owl:Class;
     rdfs:subClassOf schema:Organization;
-    rdfs:label "Pirate Crew" ;
+    rdfs:label "Pirate Crew"@en ;
+    rdfs:label "海賊団"@ja ;
     rdfs:comment "A group of pirates flying under the same jolly roger led by the same captain".
 
 :Alliance a owl:Class ;
-    rdfs:label "Alliance" ;
+    rdfs:label "Alliance"@en ;
+    rdfs:label "同盟"@ja ;
     rdfs:comment "An alliance formed by different groups/factions";
     rdfs:example "The alliance between the Starw Hats and the Hearts Pirates".
 
 :Region a owl:Class ;
-    rdfs:label "Region" ;
+    rdfs:label "Region"@en ;
+    rdfs:label "地域"@ja ;
     rdfs:comment "A region in the world of One Piece, consisting of multiple kingdoms and islands" ;
     rdfs:subClassOf :Location .
 
 :Sea a owl:Class ;
-    rdfs:label "Sea" ;
+    rdfs:label "Sea"@en ;
+    rdfs:label "海"@ja ;
     rdfs:comment "A sea in the world of One Piece" ;
     rdfs:subClassOf :Location .
 
 :Kingdom a owl:Class ;
-    rdfs:label "Kingdom" ;
+    rdfs:label "Kingdom"@en ;
+    rdfs:label "王国"@ja ;
     rdfs:comment "A kingdom in the world of One Piece, not the same as the island on which the kingdom exists".
 
 :citizenOf a owl:ObjectProperty ;
-    rdfs:label "Citizen Of" ;
+    rdfs:label "Citizen Of"@en ;
+    rdfs:label "市民"@ja ;
     rdfs:comment "The kingdom of which the character is a citizen" ;
     rdfs:domain :Character ;
     rdfs:range :Kingdom .
@@ -312,12 +340,6 @@ rdfs:comment "The bounty on a pirate's head in berries".
     rdfs:comment "The height of a character in centimeters" ;
     rdfs:domain :Character ;
     rdfs:range xsd:integer .
-
-:epithet a owl:DatatypeProperty ;
-    rdfs:label "Epithet"@en;
-    rdfs:comment "An epithet (通り名, Tōrina?) is a reputational title attached to a person, usually based on some well-known attribute—such as physical traits, personalities, or deeds." ;
-    rdfs:domain :Character ;
-    rdfs:range xsd:string .
 
 ### Arc Properties ###
 :arcStartManga a owl:ObjectProperty ;
