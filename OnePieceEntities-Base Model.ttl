@@ -31,7 +31,7 @@
     .
 
 
-:Monkey_D_Luffy a :Character , :Pirate ;
+:Monkey_D_Luffy a :Character ;
     rdfs:label "Monkey D. Luffy"@en ;
     rdfs:label "モンキー・D・ルフィ"@ja ;
     rdfs:label "Monkī Dī Rufi"@ja-latn ;
@@ -39,7 +39,7 @@
     :mangaDebut :Chapter_1;
     :animeDebut :Episode_1;
     :affiliatesWith :Straw_Hat_Pirates, :Straw_Hat_Grand_Fleet, :Four_Emperors, :Clan_of_D, :Dadan_Family, :Baratie, :Impel_Down, :Ninja_Pirate_Mink_Samurai_Alliance;
-    :occupation :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;    
+    :occupation :Pirate, :Pirate_Captain, :Emperor, :Senior_Captain_of_the_Grand_Fleet, :Chore_Boy, :Prisoner, :Bandit ;    
     :placeOfOrigin :Foosha_Village ;
     :residence :Foosha_Village, :Mt_Colubo, :Rusukaina;
     :temporaryAlias "Lucy"@en, "ルーシー"@ja;
@@ -55,7 +55,6 @@
     schema:birthDate "05-05"^^xsd:gMonthDay ;
     :height 172 ;
     :hasBloodType :BloodType_F ;
-    :race :Human;
     :citizenOf :Goa_Kingdom;
 
     ### Bounties
@@ -75,7 +74,7 @@
     :hasdevilFruit :Gomu_Gomu_no_Mi ;
     .
 
-:Roronoa_Zoro a :Character, :Pirate ;
+:Roronoa_Zoro a :Character ;
     rdfs:label "Roronoa Zoro"@en ;
     rdfs:label "ロロノア・ゾロ"@ja ;
     skos:altLabel "Zoro"@en ;
@@ -96,7 +95,6 @@
     :height "181"^^xsd:integer ;
     :hasBloodType :BloodType_XF;
     :residence :Shimotsuki_Village, :Nazawaka_City, :Kuraigana_Island ;
-    :temporaryAlias "Zoro-juurou"@en, "ゾログロ"@ja ;
     
     ### Bounties
     :hasBounty :Zoro_Bounty_Arabasta;
@@ -109,14 +107,14 @@
     :englishVoiceActor :Brian_Zimmerman, :Marc_Diraison, :Andrew_Rannells, :Christopher_R_Sabat, :Brina_Palencia, :Cynthia_Cranz, :Aaron_Dismuke;
     :liveActionPortrayedBy :Mackenyu, :Maxmillian_Lee_Piazza.
 
-:Nami a :Character, :Pirate ;
+:Nami a :Character ;
     rdfs:label "Nami"@en, "ナミ"@ja ;
     rdfs:comment "Nami is the navigator of the Straw Hat Pirates in the One Piece series. She is known for her intelligence and cartography skills."@en;
     rdfs:comment "ナミはワンピースシリーズに登場する麦わらの一味の航海士であり、知性と地図製作のスキルで知られています。"@ja ;
     :mangaDebut :Chapter_8;
     :animeDebut :Episode_1;
     :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Arlong_Pirates, :Ganzack_Pirates, :Golden_Lion_Pirates, :Ninja_Pirate_Mink_Samurai_Alliance;
-    :occupation :Navigator, :Thief, :Senior_Officer, :Pirate_Officer , :Kunoichi;
+    :occupation :Pirate, :Navigator, :Thief, :Senior_Officer, :Pirate_Officer , :Kunoichi;
 
     :statusOfCharacter :Alive ;
     :race :Human ;
@@ -142,14 +140,14 @@
     :liveActionPortrayedBy :Emily_Rudd, :Lily_Fisher, :Sophie_Ellenbogen
     .
 
-:Usopp a :Character, :Pirate;
+:Usopp a :Character ;
     rdfs:label "Usopp"@en, "ウソップ"@ja ;
     rdfs:comment "Usopp is the sniper of the Straw Hat Pirates in the One Piece series. He is known for his marksmanship and storytelling abilities."@en ;
     rdfs:comment "ウソップはワンピースシリーズに登場する麦わらの一味の狙撃手であり、射撃技術と物語能力で知られています。"@ja ;
     :mangaDebut :Chapter_23;
     :animeDebut :Episode_8;
     :affiliatesWith :Straw_Hat_Pirates , :Straw_Hat_Grand_Fleet, :Usopp_Pirates, :Ninja_Pirate_Mink_Samurai_Alliance;
-    :occupation :Sniper, :Senior_Officer, :Toad_Oil_Salesman ;
+    :occupation :Pirate, :Sniper, :Senior_Officer, :Toad_Oil_Salesman ;
     :statusOfCharacter :Alive;
     :race :Human;
     :placeOfOrigin :Syrup_Village;
@@ -190,7 +188,7 @@
     :bountyAmount "500000000"^^xsd:integer ;
     :givenAfter :Wano_Arc .
 
-:Sanji a :Character , :Pirate ;
+:Sanji a :Character ;
     rdfs:label "Sanji"@en ;
     rdfs:label "サンジ"@ja ;
     :romanizedName "Sanji"@en ;
@@ -205,7 +203,7 @@
                     :Baratie, :Germa_Kingdom, :Ninja_Pirate_Mink_Samurai_Alliance ;
     
     ### Occupations
-    :occupation :Cook, :Senior_Officer, :Sous_Chef, :Prince, :Cart_Vendor ;
+    :occupation :Pirate, :Cook, :Senior_Officer, :Sous_Chef, :Prince, :Cart_Vendor ;
     
     ### Status
     :statusOfCharacter :Alive ;
@@ -275,7 +273,7 @@
     :givenAfter :Wano_Country_Arc ;
     .
 
-:Tony_Tony_Chopper a :Character , :Pirate ;
+:Tony_Tony_Chopper a :Character ;
     rdfs:label "Tony Tony Chopper"@en ;
     rdfs:label "トニートニー・チョッパー"@ja ;
     :romanizedName "Tonī Tonī Choppā"@en ;
@@ -290,7 +288,7 @@
                     :Ninja_Pirate_Mink_Samurai_Alliance ;
     
     ### Occupations
-    :occupation :Doctor, :Senior_Officer ;
+    :occupation :Pirate, :Doctor, :Senior_Officer ;
     
     ### Status
     :statusOfCharacter :Alive ;
@@ -353,7 +351,7 @@
     rdfs:comment "Still considered a pet by the World Government"@en ;
     .
 
-:Nico_Robin a :Character , :Pirate ;
+:Nico_Robin a :Character ;
     rdfs:label "Nico Robin"@en ;
     rdfs:label "ニコ・ロビン"@ja ;
     :romanizedName "Niko Robin"@en ;
@@ -369,8 +367,8 @@
                     :Ninja_Pirate_Mink_Samurai_Alliance ;
     
     ### Occupations
-    :occupation :Archaeologist, :Senior_Officer, :Geisha, :Assassin, 
-                :Baroque_Works_Vice_President, :Rain_Dinners_Manager, 
+    :occupation :Pirate, :Archaeologist, :Senior_Officer, :Geisha, :Assassin,
+                :Baroque_Works_Vice_President, :Rain_Dinners_Manager,
                 :Revolutionary, :Slave ;
     
     ### Status
@@ -439,7 +437,7 @@
     :givenAfter :Wano_Country_Arc ;
     .
 
-:Franky a :Character , :Pirate ;
+:Franky a :Character ;
     rdfs:label "Franky"@en ;
     rdfs:label "フランキー"@ja ;
     :romanizedName "Furankī"@en ;
@@ -454,7 +452,7 @@
                     :Toms_Workers, :Ninja_Pirate_Mink_Samurai_Alliance ;
     
     ### Occupations
-    :occupation :Shipwright, :Senior_Officer, :Dismantler, :Underworld_Boss, :Bounty_Hunter ;
+    :occupation :Pirate, :Shipwright, :Senior_Officer, :Dismantler, :Underworld_Boss, :Bounty_Hunter ;
     
     ### Status
     :statusOfCharacter :Alive ;
@@ -512,7 +510,7 @@
     :givenAfter :Wano_Country_Arc ;
     .
 
-:Brook a :Character , :Pirate ;
+:Brook a :Character ;
     rdfs:label "Brook"@en ;
     rdfs:label "ブルック"@ja ;
     :romanizedName "Burukku"@en ;
@@ -527,7 +525,7 @@
                     :Ninja_Pirate_Mink_Samurai_Alliance ;
     
     ### Occupations
-    :occupation :Musician, :Swordsman, :Senior_Officer, :Pirate_Captain, 
+    :occupation :Pirate, :Musician, :Swordsman, :Senior_Officer, :Pirate_Captain,
                 :Battle_Convoy_Leader, :World_Famous_Rock_Star ;
     
     ### Status
@@ -589,7 +587,7 @@
     :givenAfter :Wano_Country_Arc ;
     .
 
-:Jinbe a :Character , :Pirate ;
+:Jinbe a :Character ;
     rdfs:label "Jinbe"@en ;
     rdfs:label "ジンベエ"@ja ;
     :romanizedName "Jinbē"@en ;
@@ -811,6 +809,9 @@
     rdfs:label "ゾオン"@ja ;
     rdfs:comment "Zoan is a type of Devil Fruit that allows the user to transform into an animal or a hybrid form of an animal."@en .
 
+:Pirate a :Occupation ;
+    rdfs:label "Pirate"@en ;
+    rdfs:label "海賊"@ja .
 :Pirate_Captain a :Occupation ;
     rdfs:label "Pirate Captain"@en ;
     rdfs:label "海賊船長"@ja .
