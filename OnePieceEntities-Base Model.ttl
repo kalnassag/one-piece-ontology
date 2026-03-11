@@ -918,4 +918,3 @@
     rdfs:label "Calm Belt"@en ;
     rdfs:label "凪の帯"@ja ;
     rdfs:comment "The Calm Belt is a region in the One Piece world that borders the Grand Line, known for its lack of wind and sea currents, making it difficult for ships to navigate."@en .
-
