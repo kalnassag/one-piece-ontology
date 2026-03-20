@@ -1,0 +1,161 @@
+@prefix op: <http://kalnassag.com/onepiece/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+op:Brook a op:Character ;
+    rdfs:label "Brook"@en,
+        "ブルック"@ja,
+        "Burukku"@ja-latn ;
+    op:affiliatesWith op:Ninja-Pirate-Mink-Samurai_Alliance,
+        op:Rumbar_Pirates,
+        op:Straw_Hat_Grand_Fleet,
+        op:Straw_Hat_Pirates ;
+    op:englishVoiceActor <http://kalnassag.com/onepiece/Funimation:Ian_Sinclair> ;
+    op:hasBloodType op:X ;
+    op:height 266 ;
+    op:japaneseVoiceActor op:Chō ;
+    op:opwikiID "Brook"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Brook"^^xsd:anyURI ;
+    op:placeOfOrigin op:West_Blue ;
+    op:statusOfCharacter op:Alive .
+
+op:Sanji a op:Character ;
+    rdfs:label "Sanji"@en,
+        "サンジ"@ja,
+        "Sanji"@ja-latn ;
+    op:affiliatesWith op:Baratie,
+        op:Germa_Kingdom,
+        op:Ninja-Pirate-Mink-Samurai_Alliance,
+        op:Straw_Hat_Grand_Fleet,
+        op:Straw_Hat_Pirates,
+        op:Vinsmoke_Family ;
+    op:englishVoiceActor <http://kalnassag.com/onepiece/Odex:Joseph_Murray_;Paul_Pistore_4Kids:David_Moo;Veronica_TaylorFunimation:Eric_Vale;Christine_Auten;Megan_Shipman> ;
+    op:hasBloodType op:S ;
+    op:height 177 ;
+    op:japaneseVoiceActor <http://kalnassag.com/onepiece/Hiroaki_Hirata;Ikue_Otani> ;
+    op:opwikiID "Sanji"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Sanji"^^xsd:anyURI ;
+    op:placeOfOrigin op:North_Blue ;
+    op:statusOfCharacter op:Alive .
+
+op:Sarai a op:Character ;
+    rdfs:label "サライ"@ja,
+        "Sarai"@ja-latn ;
+    op:affiliatesWith op:Takotopus_Pirates ;
+    op:opwikiID "Sarai"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Sarai"^^xsd:anyURI ;
+    op:statusOfCharacter op:Unknown .
+
+op:Sarie_Nantokanette a op:Character ;
+    rdfs:label "Sally Isntoinette"@en,
+        "サリー・ナントカネット"@ja,
+        "Sarī Nantokanetto"@ja-latn ;
+    op:affiliatesWith op:Goa_Kingdom ;
+    op:englishVoiceActor <http://kalnassag.com/onepiece/Funimation:Emily_Neves> ;
+    op:japaneseVoiceActor op:Yuka_Komatsu ;
+    op:opwikiID "Sarie_Nantokanette"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Sarie_Nantokanette"^^xsd:anyURI ;
+    op:statusOfCharacter op:Alive .
+
+op:Saru a op:Character ;
+    rdfs:label "Salou ; Saruu"@en,
+        "サルウ"@ja,
+        "Sarū"@ja-latn ;
+    op:affiliatesWith op:Rosward_Family ;
+    op:opwikiID "Saru"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Saru"^^xsd:anyURI ;
+    op:statusOfCharacter op:Alive .
+
+op:Satchels_Maffey a op:Character ;
+    rdfs:label "St. Maffey"@en,
+        "マッフィー宮"@ja,
+        "Maffī Gū"@ja-latn ;
+    op:affiliatesWith op:Knights_of_God,
+        op:World_Nobles ;
+    op:opwikiID "Satchels_Maffey"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Satchels_Maffey"^^xsd:anyURI ;
+    op:statusOfCharacter op:Unknown .
+
+op:Satori a op:Character ;
+    rdfs:label "Satori"@en,
+        "サトリ"@ja,
+        "Satori"@ja-latn ;
+    op:affiliatesWith <http://kalnassag.com/onepiece/God's_Army> ;
+    op:englishVoiceActor <http://kalnassag.com/onepiece/4Kids:David_LapkinFunimation:Chris_Cason> ;
+    op:hasBloodType op:S ;
+    op:height "179 cm"^^xsd:integer ;
+    op:japaneseVoiceActor op:Yasuhiro_Takato ;
+    op:opwikiID "Satori"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Satori"^^xsd:anyURI ;
+    op:placeOfOrigin op:Sky_Islands ;
+    op:statusOfCharacter op:Unknown .
+
+op:Sauce a op:Character ;
+    rdfs:label "ソース"@ja,
+        "Sōsu"@ja-latn ;
+    op:affiliatesWith op:Levely ;
+    op:japaneseVoiceActor op:Unknown ;
+    op:opwikiID "Sauce"^^xsd:string ;
+    op:opwikiurl "https://onepiece.fandom.com/wiki/Sauce"^^xsd:anyURI ;
+    op:statusOfCharacter op:Alive .
+
+<http://kalnassag.com/onepiece/4Kids:David_LapkinFunimation:Chris_Cason> a schema:Person .
+
+op:Baratie a op:Affiliation .
+
+op:Chō a schema:Person .
+
+<http://kalnassag.com/onepiece/Funimation:Emily_Neves> a schema:Person .
+
+<http://kalnassag.com/onepiece/Funimation:Ian_Sinclair> a schema:Person .
+
+op:Germa_Kingdom a op:Affiliation .
+
+op:Goa_Kingdom a op:Affiliation .
+
+<http://kalnassag.com/onepiece/God's_Army> a op:Affiliation .
+
+<http://kalnassag.com/onepiece/Hiroaki_Hirata;Ikue_Otani> a schema:Person .
+
+op:Knights_of_God a op:Affiliation .
+
+op:Levely a op:Affiliation .
+
+op:North_Blue a op:Location .
+
+<http://kalnassag.com/onepiece/Odex:Joseph_Murray_;Paul_Pistore_4Kids:David_Moo;Veronica_TaylorFunimation:Eric_Vale;Christine_Auten;Megan_Shipman> a schema:Person .
+
+op:Rosward_Family a op:Affiliation .
+
+op:Rumbar_Pirates a op:Affiliation .
+
+op:Sky_Islands a op:Location .
+
+op:Takotopus_Pirates a op:Affiliation .
+
+op:Vinsmoke_Family a op:Affiliation .
+
+op:West_Blue a op:Location .
+
+op:World_Nobles a op:Affiliation .
+
+op:X a op:BloodType .
+
+op:Yasuhiro_Takato a schema:Person .
+
+op:Yuka_Komatsu a schema:Person .
+
+op:Ninja-Pirate-Mink-Samurai_Alliance a op:Affiliation .
+
+op:S a op:BloodType .
+
+op:Straw_Hat_Grand_Fleet a op:Affiliation .
+
+op:Straw_Hat_Pirates a op:Affiliation .
+
+op:Unknown a op:Status,
+        schema:Person .
+
+op:Alive a op:Status .
+
